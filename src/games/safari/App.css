@@ -1,3 +1,14 @@
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+
+.close-button__text {
+  cursor: pointer;
+  font-size: 2rem;
+}
+
 .savanna-main-container {
   height: 100vh;
   background-image: url('./assets/background.svg');
@@ -11,6 +22,10 @@
 .savanna-start-page {
   height: 100%;
   display: none;
+}
+
+.page-show {
+  display: block;
 }
 
 .welcome-wrapper {
@@ -44,10 +59,14 @@
 
 .safari-game {
   height: 100%;
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.game-show {
+  display: flex;
 }
 
 .safari-answers {
@@ -81,6 +100,10 @@
 }
 
 .rightAnswer {
+  background-color: green;
+}
+
+.rightAnswer:hover {
   background-color: green;
 }
 
