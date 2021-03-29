@@ -57,7 +57,6 @@ const Game = (props: GameProps): JSX.Element => {
       setState((currentState) => {
         currentState.uiState = { ...currentState.uiState };
         currentState.uiState.buttons = [...currentState.uiState.buttons];
-
         currentState.uiState.buttons[currentRightAnswer] = { state: 'rightAnswer' };
         currentState.uiState.buttons[number] = { state: 'wrongAnswer' };
         return currentState;
@@ -123,7 +122,6 @@ const Game = (props: GameProps): JSX.Element => {
       <div className={questionClass}>{currentRound.question}</div>
       <div className='safari-answers'>
         {currentRound.answers.map((answer, i) => {
-          console.log(state.questions[state.round].answers);
           const buttonClass = cn(
             'button-answer',
             {
