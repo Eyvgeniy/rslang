@@ -21,7 +21,6 @@
 
 .savanna-start-page {
   height: 100%;
-  display: none;
 }
 
 .page-show {
@@ -59,7 +58,7 @@
 
 .safari-game {
   height: 100%;
-  display: none;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -105,6 +104,14 @@
 
 .rightAnswer:hover {
   background-color: green;
+}
+
+.wrongAnswer {
+  background-color: red;
+}
+
+.wrongAnswer:hover {
+  background-color: red;
 }
 
 @keyframes question-fall {
