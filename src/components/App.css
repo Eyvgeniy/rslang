@@ -7,3 +7,121 @@
 body {
   font-family: Lato, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+
+  background-color: #f3f3f3;
+}
+
+.book-nav {
+  width: 80%;
+  margin: 30px 0px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.book-link {
+  font-size: 1.4rem;
+  padding: 5px 10px;
+  background-color: #fff;
+  border: 0;
+
+  border-radius: 5px 5px 5px 5px;
+  box-shadow: 0px 5px 15px 2px rgba(181, 181, 181, 0.78);
+}
+
+.link1 {
+  border-left: 8px solid #1d3557;
+}
+
+.link1:hover {
+  color: #fff;
+  background-color: #1d3557;
+}
+
+.link2 {
+  border-left: 8px solid #457b9d;
+}
+
+.link3 {
+  border-left: 8px solid #a8dadc;
+}
+
+.link4 {
+  border-left: 8px solid #ffb703;
+}
+
+.link5 {
+  border-left: 8px solid #e07a5f;
+}
+
+.link6 {
+  border-left: 8px solid #e63946;
+}
+
+.book {
+  width: 80%;
+  border: 0;
+  background-color: #fff;
+  border-left: 15px solid #1d3557;
+  border-radius: 0px 18px 18px 0px;
+  box-shadow: 0px 5px 15px 2px rgba(181, 181, 181, 0.78);
+}
+
+ul {
+  list-style: none;
+}
+
+/* Style the button that is used to open and close the collapsible content */
+.collapsible {
+  color: #444;
+  cursor: pointer;
+  padding: 5px 10px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active,
+.collapsible:hover {
+  background-color: #ccc;
+}
+
+.collapsible:after {
+  content: '\02795'; /* Unicode character for "plus" sign (+) */
+  font-size: 13px;
+  color: white;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: '\2796'; /* Unicode character for "minus" sign (-) */
+}
+
+/* Style the collapsible content. Note: hidden by default */
+.content {
+  padding: 0 18px;
+
+  overflow: hidden;
+  background-color: #f1f1f1;
+
+  -webkit-column-count: 2;
+  -moz-column-count: 2;
+  column-count: 2;
+  -webkit-column-gap: 10px;
+  -moz-column-gap: 10px;
+  column-gap: 10px;
+  -webkit-column-rule: 1px solid transparent;
+  -moz-column-rule: 1px solid transparent;
+  column-rule: 1px solid transparent;
+}
