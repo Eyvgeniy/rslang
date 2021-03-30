@@ -8,10 +8,10 @@ const App = (): JSX.Element => {
   const [position, setPosition] = React.useState(100);
 
   return (
-    <section className='savanna-main-container' style={{ backgroundPositionY: `${position}%` }}>
-      <div className='close-button'>
+    <section className="savanna-main-container" style={{ backgroundPositionY: `${position}%` }}>
+      <div className="close-button">
         <span
-          className='close-button__text'
+          className="close-button__text"
           onClick={() => {
             setGameState('start');
             setPosition(100);
