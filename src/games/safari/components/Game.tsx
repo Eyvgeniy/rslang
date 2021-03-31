@@ -7,44 +7,23 @@ interface GameProps {
   gameState: string;
   setGameState: (state: string) => void;
   setPosition: (cb: (number: number) => number) => void;
+  words: Array<{ question: string; rightAnswer: number; answers: Array<string> }>;
 }
 
 const defaultState = {
   round: 0,
   lives: 5,
   currentAnswer: 'none',
-  questions: [
-    {
-      question: 'option',
-      answers: ['лодка', 'настройка', 'везти', 'этаж'],
-      rightAnswer: 1,
-    },
-    {
-      question: 'house',
-      answers: ['лодка', 'настройка', 'везти', 'дом'],
-      rightAnswer: 3,
-    },
-    {
-      question: 'live',
-      answers: ['лодка', 'настройка', 'везти', 'жизнь'],
-      rightAnswer: 3,
-    },
-    {
-      question: 'apple',
-      answers: ['яблоко', 'настройка', 'везти', 'дом'],
-      rightAnswer: 0,
-    },
-  ],
   uiState: {
     buttons: [{ state: 'common' }, { state: 'common' }, { state: 'common' }, { state: 'common' }],
   },
 };
 
 const Game = (props: GameProps): JSX.Element => {
-  const { gameState, setGameState, setPosition } = props;
+  const { gameState, setGameState, setPosition, words } = props;
   const [state, setState] = React.useState({ ...defaultState });
   const handleAnswer = (number: number) => (): void => {
-    const currentRightAnswer = state.questions[state.round].rightAnswer;
+    const currentRightAnswer = words[state.round].rightAnswer;
     if (number === currentRightAnswer) {
       setState((currentState) => {
         currentState.uiState = { ...currentState.uiState };
@@ -116,7 +95,7 @@ const Game = (props: GameProps): JSX.Element => {
     };
   }, [gameState, state]);
 
-  const currentRound = state.questions[state.round];
+  const currentRound = words[state.round];
   return (
     <div className="safari-game">
       <div className={questionClass}>{currentRound.question}</div>
