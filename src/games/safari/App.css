@@ -11,6 +11,7 @@
 
 .savanna-main-container {
   height: 100vh;
+  width: 100%;
   background-image: url('./assets/background.svg');
   background-position-x: center;
 

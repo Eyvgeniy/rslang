@@ -1,3 +1,3 @@
-import Safari from './App';
+import Savanna from './App';
 
-export default Safari;
+export default Savanna;

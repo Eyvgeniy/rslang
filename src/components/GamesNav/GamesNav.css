@@ -1,0 +1,21 @@
+.games-nav {
+  display: flex;
+}
+
+.game-card {
+  height: 200px;
+  width: 300px;
+  margin: 20px 10px;
+}
+
+.game-savanna {
+  height: 100%;
+  width: 100%;
+  color: white;
+  text-align: center;
+  vertical-align: center;
+  background-image: url('../../../public/assets/background.svg');
+  background-position-x: center;
+  background-position-y: 100%;
+  background-size: 150% auto;
+}

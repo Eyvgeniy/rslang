@@ -131,6 +131,7 @@ body {
 }
 
 .words-list {
+  min-height: 600px;
   list-style: none;
 }
 
@@ -187,4 +188,14 @@ body {
   -webkit-column-rule: 1px solid transparent;
   -moz-column-rule: 1px solid transparent;
   column-rule: 1px solid transparent;
+}
+
+.pages {
+  width: 7%;
+  margin: 15px auto;
+  font-size: 1.5rem;
+}
+
+.word-image {
+  background: url('../../public/assets/1487.gif') no-repeat scroll center center;
 }

@@ -4,9 +4,7 @@ const getRandomInt = (min: number, max: number): number =>
 const result = [] as Array<Array<string>>;
 const getWrongAnswers = (list: Array<string>): Array<Array<string>> => {
   list.forEach((word, i, arr) => {
-    const wrongAnswers = new Array(NUMBER_OF_ANSWERS)
-      .fill(null)
-      .map(() => arr[getRandomInt(0, arr.length)]);
+    const wrongAnswers = new Array(NUMBER_OF_ANSWERS).fill(arr[getRandomInt(0, arr.length)]);
     result.push(wrongAnswers);
   });
   return result;

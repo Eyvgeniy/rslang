@@ -71,7 +71,7 @@ const Game = (props: GameProps): JSX.Element => {
 
   React.useEffect(() => {
     if (gameState === 'rightAnswer') {
-      setPosition((currentPosition) => currentPosition - 10);
+      setPosition((currentPosition) => currentPosition - 5);
       rafTimeout(
         () => {
           setState((currentState) => {
@@ -118,9 +118,9 @@ const Game = (props: GameProps): JSX.Element => {
 
   const currentRound = state.questions[state.round];
   return (
-    <div className='safari-game'>
+    <div className="safari-game">
       <div className={questionClass}>{currentRound.question}</div>
-      <div className='safari-answers'>
+      <div className="safari-answers">
         {currentRound.answers.map((answer, i) => {
           const buttonClass = cn(
             'button-answer',
