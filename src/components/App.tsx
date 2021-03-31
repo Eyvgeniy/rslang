@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Safari from '../games/safari';
 import routes from '../routes';
+import WordsList from './WordsList/WordList';
 import './App.css';
 
 const groups = [
@@ -13,14 +14,8 @@ const groups = [
 ];
 
 const App = (): JSX.Element => {
-  const [active, setActive] = React.useState(null);
   const [words, setWords] = React.useState([]);
-  const handleWords = (i: number) => () => {
-    setActive((prev: number | null): null | number => {
-      if (prev === i) return null;
-      return i;
-    });
-  };
+  console.log('App render');
 
   React.useEffect(() => {
     fetch(routes.getWords())
@@ -28,7 +23,7 @@ const App = (): JSX.Element => {
       .then((wordsList) => {
         setWords(wordsList);
       });
-  }, [words]);
+  }, []);
   return (
     <div className="container">
       <div className="book-nav">
@@ -38,34 +33,7 @@ const App = (): JSX.Element => {
           </button>
         ))}
       </div>
-      <div className="book">
-        <ul>
-          {words.map((word, i) => {
-            const isActive = i === active;
-            const liClass = isActive ? 'active' : '';
-            return (
-              <>
-                <li className={`collapsible ${liClass}`} key={i} onClick={handleWords(i)}>
-                  {word.word}
-                </li>
-                {isActive && (
-                  <div className="content" key={i + 20}>
-                    <p>{`Транскрипция ${word.transcription}`}</p>
-                    <p>{`Перевод - ${word.wordTranslate}`}</p>
-                    <p>{`Применение - ${word.textMeaning}`}</p>
-                    <p>{`Применение перевод - ${word.textMeaningTranslate}`}</p>
-                    <img
-                      src={`https://eyvgeniy-rslang-be.herokuapp.com/${word.image}`}
-                      height="300px"
-                      width="400px"
-                    />
-                  </div>
-                )}
-              </>
-            );
-          })}
-        </ul>
-      </div>
+      <div className="book">{<WordsList words={words} />}</div>
     </div>
   );
 };
