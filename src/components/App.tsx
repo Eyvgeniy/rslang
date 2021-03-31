@@ -2,6 +2,7 @@ import * as React from 'react';
 import Safari from '../games/safari';
 import routes from '../routes';
 import WordsList from './WordsList/WordList';
+import GroupNav from './GroupNav/GroupNav';
 import './App.css';
 
 const groups = [
@@ -26,13 +27,7 @@ const App = (): JSX.Element => {
   }, []);
   return (
     <div className="container">
-      <div className="book-nav">
-        {groups.map((group, i) => (
-          <button key={i} className={`book-link ${group.class}`}>
-            {group.name}
-          </button>
-        ))}
-      </div>
+      <GroupNav />
       <div className="book">{<WordsList words={words} />}</div>
     </div>
   );
