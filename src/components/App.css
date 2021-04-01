@@ -8,7 +8,7 @@ body {
   font-family: Lato, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.container {
+.words-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -198,16 +198,18 @@ body {
 
 .word-image {
   background: url('../../public/assets/1487.gif') no-repeat scroll center center;
+}
+
 h1 {
   font-size: 70px;
   font-weight: bold;
   color: #8708f5;
 }
 h2 {
-    font-size: 30px;
-    font-weight: bold;
-    color: #8708f5;
-    margin-bottom: 40px;
+  font-size: 30px;
+  font-weight: bold;
+  color: #8708f5;
+  margin-bottom: 40px;
 }
 h3 {
   color: #8708f5;
@@ -252,11 +254,11 @@ h3 {
   font-size: 1.1rem;
   color: #494747;
 }
-.advantages-card:hover{
-  border-left: solid 2px #C822FF;
-  border-bottom: solid 2px #C822FF;
-  border-right: solid 2px #1A6DFF;
-  border-top: solid 2px #1A6DFF;
+.advantages-card:hover {
+  border-left: solid 2px #c822ff;
+  border-bottom: solid 2px #c822ff;
+  border-right: solid 2px #1a6dff;
+  border-top: solid 2px #1a6dff;
   transform: scale(1.1);
 }
 .video-container {
@@ -274,54 +276,53 @@ h3 {
   height: 69%;
 }
 
-.team-container{
+.team-container {
   margin-top: 100px;
 }
-.team-cards{
+.team-cards {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
 }
-.team-card{
+.team-card {
   width: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 50px;
 }
-.team-card>img{
+.team-card > img {
   width: 35%;
   border-radius: 50%;
 }
-.team-card__description{
+.team-card__description {
   width: 75%;
   text-align: center;
 }
-.team-card__description>h3>span{
+.team-card__description > h3 > span {
   color: #494747;
   font-style: italic;
 }
-.team-card_location{
+.team-card_location {
   color: #494747;
   font-style: italic;
-  
 }
-.team-card_location>a>img{
+.team-card_location > a > img {
   transition: all 1s;
 }
-.team-card_location>a>img:hover{
+.team-card_location > a > img:hover {
   transform: scale(1.5);
 }
-.team-card_github{
+.team-card_github {
   color: #8708f5;
   font-weight: bold;
 }
-.team-card_github>a>img{
+.team-card_github > a > img {
   transition: all 1s;
 }
-.team-card_github>a>img:hover{
+.team-card_github > a > img:hover {
   transform: rotate(360deg);
 }
-.team-card_development>span {
-  color: #1A6DFF;
+.team-card_development > span {
+  color: #1a6dff;
 }
