@@ -25,7 +25,7 @@ const Book = (): JSX.Element => {
     <div className="words-container">
       <GroupNav />
       <div className={`book book-group${group}`}>
-        <h3>Список слов</h3>
+        <h3 className="book-title">Список слов для изучения</h3>
         <WordsList />
         <div className="pages">
           <button onClick={handleBackPage}>&#129044;</button> <span>{page}</span>{' '}
