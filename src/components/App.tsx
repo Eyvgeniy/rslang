@@ -13,7 +13,7 @@ const store = configureStore({
 const App = (): JSX.Element => (
   <Provider store={store}>
     <Router>
-      <Route path='/' component={Root} />
+      <Route path="/" component={Root} />
     </Router>
   </Provider>
 );

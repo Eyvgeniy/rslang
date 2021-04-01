@@ -198,4 +198,130 @@ body {
 
 .word-image {
   background: url('../../public/assets/1487.gif') no-repeat scroll center center;
+h1 {
+  font-size: 70px;
+  font-weight: bold;
+  color: #8708f5;
+}
+h2 {
+    font-size: 30px;
+    font-weight: bold;
+    color: #8708f5;
+    margin-bottom: 40px;
+}
+h3 {
+  color: #8708f5;
+}
+.App {
+  user-select: none;
+}
+
+.photo-container {
+  max-width: 1140px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin: 0 auto;
+  text-align: center;
+}
+.photo {
+  width: 100%;
+}
+.description-container {
+  margin-top: 50px;
+  text-align: center;
+}
+.description-container > p {
+  font-size: 30px;
+  color: #737373;
+}
+.advantages-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.advantages-card {
+  width: 225px;
+  border: solid #cacaca 2px;
+  border-radius: 10px;
+  margin: 10px;
+  transition: all 1s;
+}
+
+.advantages-card > p {
+  font-size: 1.1rem;
+  color: #494747;
+}
+.advantages-card:hover{
+  border-left: solid 2px #C822FF;
+  border-bottom: solid 2px #C822FF;
+  border-right: solid 2px #1A6DFF;
+  border-top: solid 2px #1A6DFF;
+  transform: scale(1.1);
+}
+.video-container {
+  margin-top: 100px;
+  position: relative;
+}
+.video-container > img {
+  width: 91%;
+}
+.video-container > iframe {
+  position: absolute;
+  top: 110px;
+  left: 20%;
+  width: 60%;
+  height: 69%;
+}
+
+.team-container{
+  margin-top: 100px;
+}
+.team-cards{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.team-card{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50px;
+}
+.team-card>img{
+  width: 35%;
+  border-radius: 50%;
+}
+.team-card__description{
+  width: 75%;
+  text-align: center;
+}
+.team-card__description>h3>span{
+  color: #494747;
+  font-style: italic;
+}
+.team-card_location{
+  color: #494747;
+  font-style: italic;
+  
+}
+.team-card_location>a>img{
+  transition: all 1s;
+}
+.team-card_location>a>img:hover{
+  transform: scale(1.5);
+}
+.team-card_github{
+  color: #8708f5;
+  font-weight: bold;
+}
+.team-card_github>a>img{
+  transition: all 1s;
+}
+.team-card_github>a>img:hover{
+  transform: rotate(360deg);
+}
+.team-card_development>span {
+  color: #1A6DFF;
 }
