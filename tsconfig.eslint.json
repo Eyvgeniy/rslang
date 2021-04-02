@@ -4,6 +4,7 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/*.tsx",
+    "src/*.ts",
     "src/**/*.js",
     "test/**/*.ts",
     "config/*.js",

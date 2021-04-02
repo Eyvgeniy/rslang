@@ -1,4 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CheckerPlugin } = require("awesome-typescript-loader");
+const getCSSModuleLocalIdent = require("react-dev-utils/getCSSModuleLocalIdent");
 
 module.exports = {
   entry: {
@@ -8,6 +10,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './template.html',
     }),
+    new CheckerPlugin(),
   ],
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
@@ -16,13 +19,36 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: '/node_modules/',
+        loader: 'awesome-typescript-loader',
+        exclude: /node_modules/,
       },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
+      },
+      {
+        test: /\.module\.s(a|c)ss$/,
+        exclude: /node_modules/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1,
+              modules: {
+                getLocalIdent: getCSSModuleLocalIdent,
+              },
+              sourceMap: true,
+            },
+          },
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: true,
+            },
+          },
+        ],
       },
       {
         test: /\.css$/i,
