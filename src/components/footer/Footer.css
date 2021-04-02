@@ -1,0 +1,8 @@
+.light-gray {
+    /* height: 100px; */
+    background-color: #f8f9fa;
+  }
+a:hover{
+    text-decoration: none;
+    color: #8708f5;
+}
