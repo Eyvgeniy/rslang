@@ -25,7 +25,7 @@ const WordsList = (): JSX.Element => {
       {loading === 'idle' ? (
         words.map((word: any, i: number) => {
           const isActive = i === active;
-          const liClass = isActive ? 'active' : '';
+          const liClass = isActive ? 'activeWord' : '';
           return (
             <React.Fragment key={i}>
               <li className={`collapsible ${liClass}`} onClick={handleWords(i)}>
