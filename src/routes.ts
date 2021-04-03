@@ -1,7 +1,7 @@
 const host = 'https://eyvgeniy-rslang-be.herokuapp.com';
 
 const getWords = (page = 0, group = 0): string =>
-  [host, 'words', `?page=${page}&group=${group}`].join('/');
+  [host, `words?page=${page}&group=${group}`].join('/');
 const getWordById = (id: string): string => [host, 'word', id].join('/');
 
 const signIn = (): string => [host, 'signin'].join('/');
@@ -11,9 +11,10 @@ const deleteUser = (id: string): string => [host, 'users', id].join('/');
 const getUser = (id: string): string => [host, 'users', id].join('/');
 const getNewUserToken = (id: string): string => [host, 'users', id, 'tokens'].join('/');
 
-const getUserPhotoUrl = (fileName: string): string => [host, 'users', `photo?filename=${fileName}`].join('/');
+const getUserPhotoUrl = (fileName: string): string =>
+  [host, 'users', `photo?filename=${fileName}`].join('/');
 
-export default { 
+export default {
   getWords,
   getWordById,
   createUser,
@@ -22,5 +23,5 @@ export default {
   getUser,
   getNewUserToken,
   signIn,
-  getUserPhotoUrl
+  getUserPhotoUrl,
 };

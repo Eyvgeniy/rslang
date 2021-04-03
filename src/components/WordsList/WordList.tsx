@@ -21,7 +21,7 @@ const WordsList = (): JSX.Element => {
   }, [group, page]);
 
   return (
-    <ul className="words-list">
+    <ul className='words-list'>
       {loading === 'idle' ? (
         words.map((word: any, i: number) => {
           const isActive = i === active;
@@ -32,16 +32,16 @@ const WordsList = (): JSX.Element => {
                 {word.word}
               </li>
               {isActive && (
-                <div className="content">
+                <div className='content'>
                   <p>{`Транскрипция ${word.transcription}`}</p>
                   <p>{`Перевод - ${word.wordTranslate}`}</p>
                   <p>{`Применение - ${word.textMeaning}`}</p>
                   <p>{`Применение перевод - ${word.textMeaningTranslate}`}</p>
                   <img
-                    className="word-image"
+                    className='word-image'
                     src={`https://eyvgeniy-rslang-be.herokuapp.com/${word.image}`}
-                    height="300px"
-                    width="400px"
+                    height='300px'
+                    width='400px'
                   />
                 </div>
               )}
