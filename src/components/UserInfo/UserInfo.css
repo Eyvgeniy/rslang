@@ -1,23 +1,22 @@
-.btn-outline-secondary{
-    color: #8708F5;
-    border-color: #8708F5;
+.btn-outline-secondary {
+  color: #8708f5;
+  border-color: #8708f5;
 }
-.btn:hover{
-    background-color: #8708F5;
+.btn:hover {
+  background-color: #8708f5;
 }
 
-.btn-logout{
-    margin-left: 60px;
+.btn-logout {
+  margin-left: 60px;
 }
-.name{
-    margin-left: 10px;
-    color: #7c795d;
-    font-family: 'Trocchi', serif;
-    font-size: 20px; 
-    font-weight: normal;
-    line-height: 24px;
+.name {
+  margin-left: 10px;
+  color: #7c795d;
+  font-family: 'Trocchi', serif;
+  font-size: 20px;
+  font-weight: normal;
+  line-height: 24px;
 }
-.img-picture{
-    width: 60px;
-    border-radius: 50%;
+.img-picture {
+  border-radius: 50%;
 }
