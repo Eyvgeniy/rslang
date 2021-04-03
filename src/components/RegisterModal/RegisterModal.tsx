@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { unwrapResult } from '@reduxjs/toolkit';
 import { connect, useSelector } from 'react-redux';
 import { Button, Form, FormControl, InputGroup, Modal, Toast } from 'react-bootstrap';
 // import styles from "./RegisterForm.module.scss";
@@ -6,7 +7,6 @@ import { Cookies, withCookies } from 'react-cookie';
 import { RootState } from '../../models/RootState';
 import { createUser, signIn } from '../../slice/user';
 import { Auth } from '../../AppConstants';
-import { unwrapResult } from '@reduxjs/toolkit';
 import { SignInResponseModel, UserModel } from '../../models/User/UserModal';
 import { useAppDispatch } from '../App';
 
@@ -80,11 +80,9 @@ const RegisterModal = ({ show, onShowChange, cookies }: RegisterFormProps): JSX.
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files[0];
-    setFile(file);
+    const fileData = e.target.files[0];
+    setFile(fileData);
   };
-
-  const handleClose = () => onShowChange(false);
 
   return (
     <Modal show={show} onHide={handleClose}>
@@ -165,11 +163,9 @@ const RegisterModal = ({ show, onShowChange, cookies }: RegisterFormProps): JSX.
   );
 };
 
-const mapStateToProps = (state: RootState, ownProps: { cookies: Cookies }) => {
-  return {
-    state: state,
-    cookies: ownProps.cookies,
-  };
-};
+const mapStateToProps = (state: RootState, ownProps: { cookies: Cookies }) => ({
+  state,
+  cookies: ownProps.cookies,
+});
 
 export default withCookies(connect(mapStateToProps, null)(RegisterModal));
