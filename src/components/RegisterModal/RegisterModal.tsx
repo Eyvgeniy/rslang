@@ -25,10 +25,20 @@ const RegisterModal = ({show, onShowChange, cookies}: RegisterFormProps): JSX.El
     const [file, setFile] = useState(null);
     const [errorMessage, setErrorMessage] = useState("");
     const [showToastr, setShow] = useState(false);
-    
+    const [validated, setValidated] = useState(false);
+
     const { loading } = useSelector((state: RootState) => state.user);
 
-    const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const form = event.currentTarget;
+        const validity = form.checkValidity();        
+        setValidated(true);
+        if(!validity){
+            return;
+        }
+
         const fileData = new FormData;
         fileData.append("file", file);
         fileData.append("name", userName);
@@ -78,42 +88,58 @@ const RegisterModal = ({show, onShowChange, cookies}: RegisterFormProps): JSX.El
     const handleClose = () => onShowChange(false);
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show} onHide={handleClose}>    
+        <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Modal.Header closeButton>
             <Modal.Title>Регистрация нового пользователя</Modal.Title>
         </Modal.Header>
 
-        <Modal.Body>
-            <InputGroup className="mb-3">
-                <FormControl
+        <Modal.Body>  
+            <Form.Group className="mb-3" controlId="formName">
+                <Form.Label>Имя пользователя</Form.Label>
+                <Form.Control 
                     aria-label="Default"
-                    type="text"
+                    type="text" 
+                    placeholder="Введите имя пользователя" 
                     value={userName}
-                    placeholder="Введите имя пользователя"
                     aria-describedby="inputGroup-sizing-default"
+                    required
                     onChange={handleUserNameChange}
                 />
-            </InputGroup>
-            <InputGroup className="mb-3">
-                <FormControl
+                <Form.Control.Feedback type="invalid">
+                    Пожалуйста, введите имя пользователя
+                </Form.Control.Feedback>
+            </Form.Group>  
+            <Form.Group className="mb-3" controlId="formEmail">
+                <Form.Label>Email адрес</Form.Label>
+                <Form.Control 
+                    type="email" 
                     aria-label="Default"
-                    type="text"
                     value={email}
                     placeholder="Введите е-мейл"
                     aria-describedby="inputGroup-sizing-default"
+                    required
                     onChange={handleEmailChange}
                 />
-            </InputGroup>
-            <InputGroup className="mb-3">
-                <FormControl
+                <Form.Control.Feedback type="invalid">
+                    Пожалуйста, введите e-мейл
+                </Form.Control.Feedback>
+            </Form.Group>  
+            <Form.Group className="mb-3"  controlId="formPassword">
+                <Form.Label>Пароль</Form.Label>
+                <Form.Control 
                     aria-label="Default"
-                    defaultValue={passWord}
+                    value={passWord}
                     type="password"
                     placeholder="Введите пароль"
                     aria-describedby="inputGroup-sizing-default"
                     onChange={handlePasswordChange}
+                    required
                 />
-            </InputGroup>
+                <Form.Control.Feedback type="invalid">
+                    Пожалуйста, введите пароль
+                </Form.Control.Feedback>
+            </Form.Group>
             <Form.Group>
                 <Form.File label="Выберете фото" onChange={handleChange}/>
             </Form.Group>
@@ -126,8 +152,9 @@ const RegisterModal = ({show, onShowChange, cookies}: RegisterFormProps): JSX.El
         </Modal.Body>
         <Modal.Footer>
                 <Button disabled={loading} variant="secondary" onClick={handleClose}>Отмена</Button>
-                <Button disabled={loading} variant="primary" onClick={handleSubmit}>Ок</Button>
+                <Button type="submit" disabled={loading} variant="primary" >Ок</Button>
         </Modal.Footer>
+        </Form>
     </Modal>
       
   );
