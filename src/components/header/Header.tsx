@@ -13,12 +13,12 @@ export function Header(): JSX.Element {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
               <Nav.Link href="/#/book">Учебник</Nav.Link>
-              <Nav.Link href="#link">Статистика</Nav.Link>
+              <Nav.Link href="/#/statistics">Статистика</Nav.Link>
               <NavDropdown title="Игры" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/#/savanna">Саванна</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">Аудиовызов</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.3">Спринт </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.4">Карточки</NavDropdown.Item>
+                <NavDropdown.Item href="/#/cardGame">Карточки</NavDropdown.Item>
               </NavDropdown>
             </Nav>
             <Button variant="outline-secondary">Вход</Button>
