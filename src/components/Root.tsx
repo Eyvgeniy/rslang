@@ -9,6 +9,7 @@ import SprintGame from '../games/sprint/index';
 import Main from './Main';
 import Statistics from './Statistics/Statistics';
 import CardGame from '../games/cards/index';
+import Dictionary from './Dictionary';
 import HFTRoute from './HFTRoute';
 import { RootState } from '../models/RootState';
 import { Auth } from '../AppConstants';
@@ -48,6 +49,7 @@ const Root = ({ cookies }: RootProps): JSX.Element => {
       <Route path='/sprint' component={SprintGame} />
       <Route path='/cardGame' component={CardGame} />
       <HFTRoute path='/statistics' component={Statistics} />
+      <HFTRoute path='/dictionary' component={Dictionary} />
       <HFTRoute path='/' component={Main} />
     </Switch>
   );

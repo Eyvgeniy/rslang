@@ -1,11 +1,13 @@
+/* eslint-disable import/prefer-default-export */
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+// eslint-disable-next-line object-curly-newline
 import { Navbar, Nav, NavDropdown, Button, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Header.css';
 import RegisterModal from '../../components/RegisterModal/RegisterModal';
 import LogInModal from '../../components/LogInModal/LogInModal';
 import { RootState } from '../../models/RootState';
-import { useSelector } from 'react-redux';
 import UserInfo from '../../components/UserInfo/UserInfo';
 
 export function Header(): JSX.Element {
@@ -25,6 +27,7 @@ export function Header(): JSX.Element {
             <Navbar.Collapse id='basic-navbar-nav'>
               <Nav className='mr-auto'>
                 <Nav.Link href='/#/book'>Учебник</Nav.Link>
+                <Nav.Link href='/#/dictionary'>Словарь</Nav.Link>
                 <Nav.Link href='#link'>Статистика</Nav.Link>
                 <NavDropdown title='Игры' id='basic-nav-dropdown'>
                   <NavDropdown.Item href='/#/savanna'>Саванна</NavDropdown.Item>

@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import routes from '../routes';
+// import { DeleteWordModel } from '../models/Word/WordModel';
 
 export const fetchWords = createAsyncThunk(
   'words/fetchStatus',
@@ -21,6 +22,15 @@ export const fetchWords = createAsyncThunk(
     }
   },
 );
+
+// export const deleteWordFromList = createAsyncThunk(
+//   'deleteWord/fetchStatus',
+//   async(deleteWordData: DeleteWordModel, { rejectWithValue })  {
+//     try {
+//       const { wordId, userId } =
+//     }
+//   }
+// )
 
 const wordsSlice = createSlice({
   name: 'words',

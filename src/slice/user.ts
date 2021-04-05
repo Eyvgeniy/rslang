@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { UserState } from '../models/RootState';
@@ -81,7 +82,7 @@ const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    //Create User
+    // Create User
     builder.addCase(createUser.pending, (state) => {
       state.loading = true;
     });
@@ -99,7 +100,7 @@ const userSlice = createSlice({
       }
       state.loading = false;
     });
-    //Get User
+    // Get User
     builder.addCase(getUser.pending, (state) => {
       state.loading = true;
     });
@@ -117,7 +118,7 @@ const userSlice = createSlice({
       }
       state.loading = false;
     });
-    //SignIn
+    // SignIn
     builder.addCase(signIn.pending, (state) => {
       state.loading = true;
     });
