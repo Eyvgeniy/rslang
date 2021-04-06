@@ -1,20 +1,12 @@
 import React, { useState } from "react";
 import { Line } from 'react-chartjs-2';
-import { month } from "./statisticsinfo";
+import { optional } from "./statisticsinfo";
 
-const day = [
-  "31.03.2021",
-  "01.04.2021",
-  "02.04.2021",
-  "03.04.2021",
-  "04.04.2021",
-  "04.04.2021",
-];
-
-const words = [125, 48, 59, 84, 85, 121, 124, 98];
+const dataGames = Object.entries(optional);
+console.log(dataGames[0][1].lernWords);
 
 const genData = () => ({
-  labels: day,
+  labels: dataGames[0][1].dateTime,
   datasets: [
     {
       type: "line",
@@ -23,13 +15,13 @@ const genData = () => ({
       borderColor: "rgba(39, 74, 172, 1)",
       borderWidth: 2,
       fill: true,
-      data: words,
+      data: dataGames[0][1].lernWords,
     },
   ],
 });
 
 const genDataAll = () => ({
-  labels: day,
+  labels: dataGames[0][1].dateTime,
   datasets: [
     {
       type: "line",
@@ -38,7 +30,7 @@ const genDataAll = () => ({
       borderColor: "rgba(39, 74, 172, 1)",
       borderWidth: 2,
       fill: true,
-      data: words,
+      data: dataGames[0][1].lernWords,
     },
   ],
 });
@@ -53,7 +45,7 @@ const options = {
           stepSize: 50,
           max: 250,
           stacked: true,
-          beginAtZero: false,
+          beginAtZero: true,
         },
       },
     ],
