@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import useSound from "use-sound";
-//import Progress from "./Progress";
+import Progress from "./Progress";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
 
@@ -19,8 +19,8 @@ const CardGame = (): JSX.Element => {
   const [playNext] = useSound(
     sounds.length > 1 ? sounds[1].audio : "sounds[0].audio"
   );
-  const [playCorrect] = useSound("../assets/correct.mp3");
-  const [playError] = useSound("../assets/error.mp3");
+  const [playCorrect] = useSound("../../../public/assets/correct.mp3");
+  const [playError] = useSound("../../../public/assets/error.mp3");
   const [correctCards, setCorrectCards] = useState([]);
 
   useEffect(() => {
@@ -50,7 +50,6 @@ const CardGame = (): JSX.Element => {
 
   function pressCard(e: any) {
     if (e.target.dataset.id === sounds[0].id) {
-      //console.log(id);
       checkCorrectAnswer();
       setCorrectCards([...correctCards, e.target.dataset.id]);
     } else checkErrorAnswer();
@@ -58,7 +57,6 @@ const CardGame = (): JSX.Element => {
 
   function checkCorrectAnswer(): void {
     playCorrect();
-
     setSounds([...sounds.slice(1)]);
     setCorrect((prevCorrect) => prevCorrect + 1);
     console.log(sounds[0]);
@@ -83,7 +81,7 @@ const CardGame = (): JSX.Element => {
       <div className="block-game">
         <div className="menu">
           <div>Correct {correct}</div>
-          <div></div>
+          <div><Progress /></div>
           <div className="incorrect">Incorrect {incorrect}</div>
         </div>
         {typeof data !== "undefined" ? (

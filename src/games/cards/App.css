@@ -11,11 +11,8 @@
 
 .main-container {
   height: 100vh;
-
-  background-image: url('https://mir-cdn.behance.net/v1/rendition/project_modules/2800_opt_1/8e770148486071.589995ea87346.jpg');
- 
+  background-image: url('../../../public/assets/bg.jpg');
   background-size: cover;
-  
   color: white;
 }
 

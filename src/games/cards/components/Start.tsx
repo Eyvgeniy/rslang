@@ -5,8 +5,7 @@ const Start = ({ setState }: { setState: any }): JSX.Element => (
     <div className='card-wrapper'>
       <h1 className='card-wrapper_heading'>Карточки</h1>
       <p className='card-wrapper_text'>
-        Тренировка Карточки развивает словарный запас. Чем больше слов ты знаешь, тем легче тебе
-        будет общаться.
+      Изучай английсский и живопись вместе. Тренировка улучшает восприятие английсской речи на слух.
       </p>
       <button className='card-wrapper_start' onClick={() => setState('waitingAnswer')}>
         Начать
