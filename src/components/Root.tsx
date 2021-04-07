@@ -3,6 +3,8 @@ import { Switch, Route } from 'react-router-dom';
 import Book from './Book';
 import Savanna from '../games/safari/index';
 import Main from './Main';
+import Statistics from './Statistics/Statistics';
+import CardGame from '../games/cards/index';
 import HFTRoute from './HFTRoute';
 import { withCookies, Cookies } from 'react-cookie';
 import { connect } from 'react-redux';
@@ -42,6 +44,8 @@ const Root = ({cookies}:RootProps): JSX.Element => {
     <Switch>
       <HFTRoute path="/book" component={Book} />
       <Route path="/savanna" component={Savanna} />
+      <Route path="/cardGame" component={CardGame} />
+      <HFTRoute path="/statistics" component={Statistics} />
       <HFTRoute path="/" component={Main} />
     </Switch>
   )
