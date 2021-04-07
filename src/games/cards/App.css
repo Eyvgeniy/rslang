@@ -11,12 +11,11 @@
 
 .main-container {
   height: 100vh;
-  width: 100%;
-  background-image: url('https://inukhome.com/13079-thickbox_default/wallpaper-for-children-s-rooms.jpg');
-  background-position-x: center;
 
-  background-attachment: fixed;
-  transition: background-position-y linear 1s;
+  background-image: url('https://mir-cdn.behance.net/v1/rendition/project_modules/2800_opt_1/8e770148486071.589995ea87346.jpg');
+ 
+  background-size: cover;
+  
   color: white;
 }
 

@@ -1,14 +1,15 @@
 
 .app {
-  object-fit: cover;
-  background-image: url('https://inukhome.com/13079-thickbox_default/wallpaper-for-children-s-rooms.jpg');
-  height: 10vh;
+  background-size: cover;
+  background-image: url('https://mir-cdn.behance.net/v1/rendition/project_modules/2800_opt_1/8e770148486071.589995ea87346.jpg');
+  height: 100vh;
+  
 }
 
 .block-game {
   border-radius: 10px;
   max-width: 1000px;
-  margin: 10px auto;
+  margin: 0 auto;
   padding-bottom: 20px;
 }
 
