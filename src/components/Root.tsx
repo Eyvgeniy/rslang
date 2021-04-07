@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Book from './Book';
 import Savanna from '../games/safari/index';
+import SprintGame from '../games/sprint/index';
 import Main from './Main';
 import HFTRoute from './HFTRoute';
 import { withCookies, Cookies } from 'react-cookie';
@@ -42,6 +43,7 @@ const Root = ({cookies}:RootProps): JSX.Element => {
     <Switch>
       <HFTRoute path="/book" component={Book} />
       <Route path="/savanna" component={Savanna} />
+      <Route path="/sprint" component={SprintGame} />
       <HFTRoute path="/" component={Main} />
     </Switch>
   )
