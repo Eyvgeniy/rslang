@@ -1,10 +1,18 @@
-import React, { useState, useEffect } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useEffect, useState } from "react";
 import useSound from "use-sound";
 import Progress from "./Progress";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
 
-const CardGame = (): JSX.Element => {
+interface GameProps {
+  gameState: string;
+  setGameState: (state: string) => void;
+  words: Array<{ id: string; image: string; audio: string }>;
+}
+
+const CardGame = (props: GameProps): JSX.Element => {
+
+  const { words } = props;
   const [data, setData] = useState([]);
   const [sounds, setSounds] = useState([
     {},
@@ -22,20 +30,20 @@ const CardGame = (): JSX.Element => {
   const [playCorrect] = useSound("../../../public/assets/correct.mp3");
   const [playError] = useSound("../../../public/assets/error.mp3");
   const [correctCards, setCorrectCards] = useState([]);
-
+  console.log(words)
   useEffect(() => {
     fetch("http://eyvgeniy-rslang-be.herokuapp.com/words?group=0&page=0")
       .then((res) => res.json())
       .then((result) => {
         setData(result);
-        const array = getSound(result);
+        const array = getSound(words);
         setSounds(array.sort(() => Math.random() - 0.5));
       });
   }, [setData, setSounds]);
 
-  function getSound(data: any[]): object[] {
+  function getSound(words: any[]): object[] {
     const arr: Array<object> = [];
-    data.forEach((word) => {
+    words.forEach((word) => {
       arr.push({
         audio: `http://eyvgeniy-rslang-be.herokuapp.com/${word.audio}`,
         id: `${word.id}`,
@@ -81,15 +89,17 @@ const CardGame = (): JSX.Element => {
       <div className="block-game">
         <div className="menu">
           <div>Correct {correct}</div>
-          <div><Progress /></div>
+          <div>
+            <Progress />
+          </div>
           <div className="incorrect">Incorrect {incorrect}</div>
         </div>
-        {typeof data !== "undefined" ? (
+        {typeof words !== "undefined" ? (
           <div
             className="d-flex flex-wrap justify-content-around cards"
             onClick={(e) => pressCard(e)}
           >
-            {data.map(
+            {words.map(
               (word, index): JSX.Element => {
                 return (
                   <div

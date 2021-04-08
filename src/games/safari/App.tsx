@@ -16,6 +16,7 @@ const App = (): JSX.Element => {
     fetch(routes.getWords(words.page + 1, words.group))
       .then((response) => response.json())
       .then((wordsData) => {
+      //  console.log(wordsData);
         const answersForWords = getWrongAnswers(wordsData, words.words);
         const wordsForCheckWithAnswer = words.words.map(
           ({ word }: { word: string }, i: number) => ({
@@ -27,7 +28,7 @@ const App = (): JSX.Element => {
       });
   }, []);
 
-  // console.log(wordsForCheckWithAnswer);
+   
   return (
     <section className="savanna-main-container" style={{ backgroundPositionY: `${position}%` }}>
       <div className="close-button">
