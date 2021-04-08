@@ -10,7 +10,7 @@ const games = [
   },
   {
     name: "Спринт",
-    img: "../../../public/assets/background.svg",
+    img: "../../../public/assets/bgsprint.jpg",
     rout: "/sprint",
   },
   {

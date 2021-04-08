@@ -30,7 +30,7 @@ export function Header(): JSX.Element {
                 <NavDropdown title="Игры" id="basic-nav-dropdown">
                   <NavDropdown.Item href="/#/savanna">Саванна</NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.2">Аудиовызов</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.3">Спринт </NavDropdown.Item>
+                  <NavDropdown.Item href="/#/sprint">Спринт </NavDropdown.Item>
                   <NavDropdown.Item href="/#/cardGame">Карточки</NavDropdown.Item>
                 </NavDropdown>
               </Nav>
