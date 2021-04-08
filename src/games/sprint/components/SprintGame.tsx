@@ -5,9 +5,16 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import './Style.css';
 
 
+interface GameProps {
+  gameState: string;
+  setGameState: (state: string) => void;
+  wordsArr: Array<{ id: string; word: string; wordTranslate: string }>;
+}
 
-function SprintGame(): JSX.Element {
 
+function SprintGame(props: GameProps): JSX.Element {
+  
+  const { wordsArr } = props;
   const [data, setData] = useState([]);
   const [words, setWords] = useState([{},{word: 'hello', id: "123456"}]);
   const [wordsTranslate, setWordsTranslate] = useState([{},{wordTranslate: 'привет', id: "123456"}]);
@@ -32,16 +39,16 @@ function SprintGame(): JSX.Element {
             .then(res => res.json())
             .then(result => {
                 setData(result);
-                getWords(result)
+                getWords(wordsArr)
             });
     }, [setData, setWords])
 
-    function getWords(res: any[]): void {
+    function getWords(wordsArr: any[]): void {
         const arrWords: Array<object> = [];
         const arrWordsTranslate: Array<object> = [];
-        res.forEach((words): void => {
-          arrWords.push({'id' : `${words.id}`, 'word' : `${words.word}`});
-          arrWordsTranslate.push({'id' : `${words.id}`, 'wordTranslate' : `${words.wordTranslate}`});
+        wordsArr.forEach((word): void => {
+          arrWords.push({'id' : `${word.id}`, 'word' : `${word.word}`});
+          arrWordsTranslate.push({'id' : `${word.id}`, 'wordTranslate' : `${word.wordTranslate}`});
         })
         arrWords.sort(() => Math.random() - 0.5);
         arrWordsTranslate.sort(() => Math.random() - 0.5);
