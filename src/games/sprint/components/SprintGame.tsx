@@ -3,7 +3,7 @@ import Progress from './Progress';
 import useSound from 'use-sound';
 import "bootstrap/dist/css/bootstrap.min.css";
 import './Style.css';
-
+import Statistics from './Statistics'
 
 interface GameProps {
   gameState: string;
@@ -33,6 +33,9 @@ function SprintGame(props: GameProps): JSX.Element {
   const [playSoundLevel] = useSound('../../../public/assets/level.mp3')
   const [playSoundStart] = useSound('../../../public/assets/start.mp3')
   const [startGame, setStartGame] = useState(false)
+  const [finishGame, setFinishGame] = useState(false)
+  const [answerMistake, setAnswerMistake] = useState([])
+  const [answerCorrect, setAnswerCorrect] = useState([])
 
     useEffect(() => {
         fetch('http://eyvgeniy-rslang-be.herokuapp.com/words?group=0&page=0')
@@ -64,7 +67,6 @@ function SprintGame(props: GameProps): JSX.Element {
 
     function getAnswer(ans: boolean): void {
 
-
       if((words[0].id === wordsTranslate[0].id) !== ans) {
         words.splice(0, 1);
         wordsTranslate.splice(0, 1);
@@ -78,6 +80,7 @@ function SprintGame(props: GameProps): JSX.Element {
           setIconWrongActive(0);
           setBorderWrongActive(0);
         }, 500);
+        answerCorrect.push({word: words[0].word, wordTranslate: wordsTranslate[0].wordTranslate})
         console.log('не угадал')
       }    else  if((words[0].id === wordsTranslate[0].id) === ans) {
         words.splice(0, 1);
@@ -92,11 +95,9 @@ function SprintGame(props: GameProps): JSX.Element {
           setIconRightActive(0);
           setBorderRightActive(0);
         }, 500);
+        answerMistake.push({word: words[0].word, wordTranslate: wordsTranslate[0].wordTranslate})
         console.log('угадал')
       }
-
-
-
 
     }
 
@@ -174,7 +175,8 @@ function SprintGame(props: GameProps): JSX.Element {
   return (
     
     <div className="App">
-      <button onClick={() => playSoundStart()}>Старт</button>
+      {finishGame ? (
+      <div>
       <div className='sprint-container'>
         <span className="score-count">{score}</span>
         <div className='sprint-card'>
@@ -219,10 +221,11 @@ function SprintGame(props: GameProps): JSX.Element {
           </div>
         </div>
       </div>
-      
       <div className='sprint-timer'>
       <Progress />
       </div>
+      </div>
+      ) : <Statistics answerMistake={answerMistake} answerCorrect={answerCorrect}/>}
     </div>
     
   );
