@@ -16,7 +16,7 @@ const games = [
   {
     name: "Аудиовызов",
     img: "../../../public/assets/background.svg",
-    rout: "/audiocall",
+    rout: "/audioChallenge",
   },
   { name: "Карточки", 
     img: "../../../public/assets/bg.jpg", 

@@ -3,9 +3,10 @@ import { Switch, Route } from 'react-router-dom';
 import Book from './Book';
 import Savanna from '../games/safari/index';
 import SprintGame from '../games/sprint/index';
+import AudioChallenge from '../games/audioChallenge/AudioChallenge';
+import CardGame from '../games/cards/index';
 import Main from './Main';
 import Statistics from './Statistics/Statistics';
-import CardGame from '../games/cards/index';
 import HFTRoute from './HFTRoute';
 import { withCookies, Cookies } from 'react-cookie';
 import { connect } from 'react-redux';
@@ -47,6 +48,7 @@ const Root = ({cookies}:RootProps): JSX.Element => {
       <Route path="/savanna" component={Savanna} />
       <Route path="/sprint" component={SprintGame} />
       <Route path="/cardGame" component={CardGame} />
+      <Route path="/audioChallenge" component={AudioChallenge} />
       <HFTRoute path="/statistics" component={Statistics} />
       <HFTRoute path="/" component={Main} />
     </Switch>
