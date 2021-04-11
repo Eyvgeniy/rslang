@@ -7,7 +7,7 @@ import Book from './Book';
 import Savanna from '../games/safari/index';
 import SprintGame from '../games/sprint/index';
 import Main from './Main';
-import Statistics from './Statistics/Statistics';
+import Statistics from './Statistics';
 import CardGame from '../games/cards/index';
 import Dictionary from './Dictionary';
 import HFTRoute from './HFTRoute';
