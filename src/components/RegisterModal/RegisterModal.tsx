@@ -84,6 +84,8 @@ const RegisterModal = ({ show, onShowChange, cookies }: RegisterFormProps): JSX.
     setFile(fileData);
   };
 
+  const handleClose = () => onShowChange(false);
+
   return (
     <Modal show={show} onHide={handleClose}>
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
