@@ -36,7 +36,7 @@ function shuffleArray<T> (a: T[]): T[] {
 const getWrongAnswers = (list: WordModel[], questions: WordModel[], numberOfAnswers: number): GameItem[] => {  
   const result: GameItem[] = [];
   const shuffledArray = shuffleArray(questions);
-  for (let i = 0; i < list.length; i += 1) {
+  for (let i = 0; i < shuffledArray.length; i += 1) {
     const arr: Array<WordModel> = [];
     const randomPostionForAnswer = getRandomInt(0, numberOfAnswers);
     const correctAnswer = shuffledArray[i];

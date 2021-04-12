@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from "react";
+import React, {FunctionComponent, useRef} from "react";
 import GameWrapper from "../components/GameWrapper/GameWrapper";
 import { AppData, GameState } from "../../AppConstants";
 import AudioChallengeGame from "./components/AudioChallengeGame";
@@ -12,18 +12,24 @@ const AudioChallenge: FunctionComponent<{}> = () => {
     const [gameState, setGameState] = React.useState(GameState.Start);
     const {words, allWords} = useSelector((state: RootState) => state.words);
     const [wordsForGame, setWordsForGame] = React.useState([] as GameItem[]);
+    const [firstAudio, setFirstAudio] = React.useState(null);
+    const childRef = useRef();
     
     const handleGameStateChange = (newGameState: keyof(GameState)) => {
         setGameState(newGameState);
     }
-    const [play, { stop, isPlaying }] = useSound(AppData.Host + '/' + wordsForGame?.[0]?.correctWord.audio);
+
+    const [play, { isPlaying, sound }] = useSound(firstAudio);
     const startClickHandler = () => {
-        play();
+        if(sound && sound.state() !== 'unloaded'){
+            play();
+        }
     }  
 
     React.useEffect(() => {
         const answersForWords = getWrongAnswers(allWords, words, AppData.AudioChallengeNumberOfAnswers);
         setWordsForGame(answersForWords);
+        setFirstAudio(AppData.Host + '/' + answersForWords[0]?.correctWord.audio)
     }, [words]);
 
     return (
@@ -36,7 +42,7 @@ const AudioChallenge: FunctionComponent<{}> = () => {
         >
             <AudioChallengeGame 
                 wordsForGame={wordsForGame}
-                outSidePlaying={isPlaying}
+                outSidePlaying={isPlaying && sound.state() !== 'unloaded'}
             />
         </GameWrapper>
     );
