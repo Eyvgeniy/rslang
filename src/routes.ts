@@ -14,6 +14,8 @@ const getNewUserToken = (id: string): string => [host, 'users', id, 'tokens'].jo
 
 const getUserPhotoUrl = (fileName: string): string => [host, 'users', `photo?filename=${fileName}`].join('/');
 
+const  updateStatistics = (id: string): string => [host, 'users', id, 'statistics', ].join('/');
+
 export default { 
   getWords,
   getWordById,
@@ -23,5 +25,6 @@ export default {
   getUser,
   getNewUserToken,
   signIn,
-  getUserPhotoUrl
+  getUserPhotoUrl, 
+  updateStatistics
 };
