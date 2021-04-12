@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import jwt from 'jwt-decode';
 import { withCookies, Cookies } from 'react-cookie';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import Book from './Book';
+import BookAuth from './BookAuth';
 import Savanna from '../games/safari/index';
 import SprintGame from '../games/sprint/index';
 import Main from './Main';
@@ -22,6 +23,7 @@ interface RootProps {
 }
 
 const Root = ({ cookies }: RootProps): JSX.Element => {
+  const user = useSelector((state: any) => state.user.currentUser);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -43,15 +45,27 @@ const Root = ({ cookies }: RootProps): JSX.Element => {
   }, []);
 
   return (
-    <Switch>
-      <HFTRoute path='/book' component={Book} />
-      <Route path='/savanna' component={Savanna} />
-      <Route path='/sprint' component={SprintGame} />
-      <Route path='/cardGame' component={CardGame} />
-      <HFTRoute path='/statistics' component={Statistics} />
-      <HFTRoute path='/dictionary' component={Dictionary} />
-      <HFTRoute path='/' component={Main} />
-    </Switch>
+    <>
+      {user ? (
+        <Switch>
+          <HFTRoute path='/book' component={Book} />
+          <Route path='/savanna' component={Savanna} />
+          <Route path='/sprint' component={SprintGame} />
+          <Route path='/cardGame' component={CardGame} />
+          <HFTRoute path='/statistics' component={Statistics} />
+          <HFTRoute path='/dictionary' component={Dictionary} />
+          <HFTRoute path='/' component={Main} />
+        </Switch>
+      ) : (
+        <Switch>
+          <HFTRoute path='/book' component={BookAuth} />
+          <Route path='/savanna' component={Savanna} />
+          <Route path='/sprint' component={SprintGame} />
+          <Route path='/cardGame' component={CardGame} />
+          <HFTRoute path='/' component={Main} />
+        </Switch>
+      )}
+    </>
   );
 };
 
