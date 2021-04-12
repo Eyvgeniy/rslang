@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Start from './components/Start';
 import Game from './components/Game';
+import { fetchWords } from '../../slice/words';
 import './App.css';
 import routes from '../../routes';
 import getWrongAnswers from '../../getWrongAnswers';
@@ -10,29 +11,34 @@ const App = (): JSX.Element => {
   const [gameState, setGameState] = React.useState('start');
   const [position, setPosition] = React.useState(100);
   const [wordsForGame, setWordsForGame] = React.useState([]);
+  const dispatch = useDispatch();
 
   const words = useSelector((state: any) => state.words);
   React.useEffect(() => {
-    fetch(routes.getWords(words.page + 1, words.group))
-      .then((response) => response.json())
-      .then((wordsData) => {
-        const answersForWords = getWrongAnswers(wordsData, words.words);
-        const wordsForCheckWithAnswer = words.words.map(
-          ({ word }: { word: string }, i: number) => ({
-            question: word,
-            ...answersForWords[i],
-          }),
-        );
-        setWordsForGame(wordsForCheckWithAnswer);
-      });
-  }, []);
+    if (words.words.length === 0) {
+      dispatch(fetchWords({ group: words.group, page: words.page }));
+    } else {
+      fetch(routes.getWords(words.page + 1, words.group))
+        .then((response) => response.json())
+        .then((wordsData) => {
+          const answersForWords = getWrongAnswers(wordsData, words.words);
+          const wordsForCheckWithAnswer = words.words.map(
+            ({ word }: { word: string }, i: number) => ({
+              question: word,
+              ...answersForWords[i],
+            }),
+          );
+          setWordsForGame(wordsForCheckWithAnswer);
+        });
+    }
+  }, [words.words]);
 
   // console.log(wordsForCheckWithAnswer);
   return (
-    <section className="savanna-main-container" style={{ backgroundPositionY: `${position}%` }}>
-      <div className="close-button">
+    <section className='savanna-main-container' style={{ backgroundPositionY: `${position}%` }}>
+      <div className='close-button'>
         <span
-          className="close-button__text"
+          className='close-button__text'
           onClick={() => {
             setGameState('start');
             setPosition(100);
