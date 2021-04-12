@@ -48,7 +48,7 @@ const Root = ({ cookies }: RootProps): JSX.Element => {
     <>
       {user ? (
         <Switch>
-          <HFTRoute path='/book' component={Book} />
+          <HFTRoute path='/book' component={BookAuth} />
           <Route path='/savanna' component={Savanna} />
           <Route path='/sprint' component={SprintGame} />
           <Route path='/cardGame' component={CardGame} />
@@ -58,7 +58,7 @@ const Root = ({ cookies }: RootProps): JSX.Element => {
         </Switch>
       ) : (
         <Switch>
-          <HFTRoute path='/book' component={BookAuth} />
+          <HFTRoute path='/book' component={Book} />
           <Route path='/savanna' component={Savanna} />
           <Route path='/sprint' component={SprintGame} />
           <Route path='/cardGame' component={CardGame} />
