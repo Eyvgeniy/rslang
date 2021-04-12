@@ -16,6 +16,8 @@ import jwt from 'jwt-decode'
 import { useAppDispatch } from './App';
 import { GetUserRequestModel, UserModel } from './../models/User/UserModal';
 import { getUser, updateToken } from '../slice/user';
+import { useSelector } from 'react-redux';
+import { fetchWords } from './../slice/words';
 
 interface RootProps {
   cookies: Cookies,
@@ -23,7 +25,7 @@ interface RootProps {
 
 const Root = ({cookies}:RootProps): JSX.Element => {
   const dispatch = useAppDispatch();
-  
+  const {group, page} = useSelector((state: RootState) => state.words);
   useEffect(() => {
     async function getUserHandler(model: GetUserRequestModel) {
       try{
@@ -32,6 +34,7 @@ const Root = ({cookies}:RootProps): JSX.Element => {
         console.log(error);
       }
     }
+
     const token = cookies.get(Auth.COOKIE_TOKEN);
     if(token){
       dispatch(updateToken(token));
@@ -40,6 +43,7 @@ const Root = ({cookies}:RootProps): JSX.Element => {
         getUserHandler({id: id, token: token});
       }
     }
+    dispatch(fetchWords({group, page}));
   }, []);
 
   return(

@@ -1,0 +1,64 @@
+.game {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.answers {
+    width: 40%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+  
+.question {
+    font-size: 1.2rem;
+    margin-bottom: 50px;
+}
+.questionIcon {
+    height: 50px;
+    width: 50px !important;
+}
+  
+.buttonAnswer {
+    font-size: 1.25rem;
+    color: #fff;
+    padding: 1rem;
+    margin: 5px 0;
+    background-color: rgba(24, 188, 156, 0.33);
+    border-color: rgba(24, 188, 156, 0.33);
+    font-size: 1rem;
+
+    &:hover{
+        background-color: #18bc9c;
+        border-color: #18bc9c;
+    }
+}
+  
+.rightAnswer {
+    background-color: green;
+    &:hover {      
+        background-color: green;
+    }
+}
+
+.wrongAnswer {
+    background-color: red;
+    &:hover{
+        background-color: red;
+    }
+}
+
+.correctAnswerBlock {
+    display: flex;
+    flex-direction: column;
+}
+
+.correctAnswerImage{
+    width: 130px;
+}
+
+.correctAnswerText{
+    text-align: center;
+}

@@ -2,12 +2,13 @@
 import * as React from 'react';
 import cn from 'classnames';
 import rafTimeout from '../rafTimeout';
+import { SavannaGameItem } from '../App';
 
 interface GameProps {
   gameState: string;
   setGameState: (state: string) => void;
   setPosition: (cb: (number: number) => number) => void;
-  words: Array<{ question: string; rightAnswer: number; answers: Array<string> }>;
+  words: Array<SavannaGameItem>;
 }
 
 const defaultState = {
@@ -113,7 +114,7 @@ const Game = (props: GameProps): JSX.Element => {
           return (
             <button className={buttonClass} key={i} onClick={handleAnswer(i)}>{`${
               i + 1
-            } ${answer}`}</button>
+            } ${answer.wordTranslate}`}</button>
           );
         })}
       </div>

@@ -4,19 +4,25 @@ import Start from './components/Start';
 import Game from './components/Game';
 import './App.css';
 import routes from '../../routes';
-import getWrongAnswers from '../../getWrongAnswers';
+import getWrongAnswers, { GameItem } from '../../getWrongAnswers';
+import { RootState } from '../../models/RootState';
+import { AppData } from './../../AppConstants';
+
+export interface SavannaGameItem extends GameItem {
+  question: string
+};
 
 const App = (): JSX.Element => {
   const [gameState, setGameState] = React.useState('start');
   const [position, setPosition] = React.useState(100);
-  const [wordsForGame, setWordsForGame] = React.useState([]);
+  const [wordsForGame, setWordsForGame] = React.useState([] as SavannaGameItem[]);
 
-  const words = useSelector((state: any) => state.words);
+  const words = useSelector((state: RootState) => state.words);
   React.useEffect(() => {
     fetch(routes.getWords(words.page + 1, words.group))
       .then((response) => response.json())
       .then((wordsData) => {
-        const answersForWords = getWrongAnswers(wordsData, words.words);
+        const answersForWords = getWrongAnswers(wordsData, words.words, AppData.SavannaNumberOfAnswers);
         const wordsForCheckWithAnswer = words.words.map(
           ({ word }: { word: string }, i: number) => ({
             question: word,

@@ -1,4 +1,5 @@
-const host = 'https://eyvgeniy-rslang-be.herokuapp.com';
+import { AppData } from './AppConstants';
+const host = AppData.Host;
 
 const getWords = (page = 0, group = 0): string =>
   [host, 'words', `?page=${page}&group=${group}`].join('/');
