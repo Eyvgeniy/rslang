@@ -1,12 +1,12 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+// import { useSelector, useDispatch } from 'react-redux';
 import Spinner from '../Spinner';
-import { fetchWords } from '../../slice/words';
+// import { fetchWords } from '../../slice/words';
 
-const WordsList = (): JSX.Element => {
+const WordsList = ({ words, loading }: { words: any; loading: string }): JSX.Element => {
   const [active, setActive] = React.useState(null);
-  const { words, page, group, loading } = useSelector((state: any) => state.words);
-  const dispatch = useDispatch();
+  // const { words, page, group, loading } = useSelector((state: any) => state.words);
+  // const dispatch = useDispatch();
 
   const handleWords = (i: number) => () => {
     setActive((prev: number | null): null | number => {
@@ -16,9 +16,8 @@ const WordsList = (): JSX.Element => {
   };
 
   React.useEffect(() => {
-    dispatch(fetchWords({ group, page }));
     setActive(null);
-  }, [group, page]);
+  }, []);
 
   return (
     <ul className='words-list'>
