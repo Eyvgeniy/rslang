@@ -1,0 +1,35 @@
+.statistic-screen{
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    width: 30%;
+    text-align: center;
+}
+.statistic-blocks{
+    display: flex;
+    flex-direction: column;
+}
+.mistake-container{
+    margin-top: 20px;
+}
+.mistake-answer>span{
+    color: red;
+}
+.mistake-word{
+    color: black;
+}
+.correct-container{
+    margin: 20px auto;
+}
+.correct-answer>span {
+    color: green;
+}
+.correct-word{
+    color: black
+}
+.statistic-buttons{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
