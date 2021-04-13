@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectPage, fetchWords } from '../../slice/words';
+import wordsApi from '../../api/wordsApi';
 import GroupNav from '../GroupNav';
 import WordsList from '../WordsList';
 import GamesNav from '../GamesNav';
@@ -10,7 +11,10 @@ const FIRST_PAGE = 0;
 const LAST_PAGE = 29;
 
 const Book = (): JSX.Element => {
-  const { group, page, loading, words } = useSelector((state: any) => state.words);
+  const { group, page, loading, words, user } = useSelector((state: any) => {
+    const { currentUser, token } = state.user;
+    return { ...state.words, user: { token, ...currentUser } };
+  });
   const dispatch = useDispatch();
 
   const handleBackPage = () => {
