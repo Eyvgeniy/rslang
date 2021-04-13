@@ -35,7 +35,6 @@ const Book = (): JSX.Element => {
 
   return (
     <div className='words-container'>
-      <BookNav />
       <GroupNav />
       <div className={`book book-group${group}`}>
         <h3 className='book-title'>Список слов для изучения</h3>
