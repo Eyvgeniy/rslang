@@ -25,33 +25,33 @@ const fetchChangeWordsState = async (user: any, wordId: string, wordData: any) =
   }
 };
 
-const setWordToLearned = (user: any, wordId: string): void => {
-  const wordData = { difficulty: 'normal' };
+const setWordToLearned = (user: any, wordId: string, stats: any): void => {
+  const wordData = { difficulty: 'normal', optional: { stats } };
   fetchSetWordsState(user, wordId, wordData);
 };
 
-const updateWordToLearned = (user: any, wordId: string): void => {
-  const wordData = { difficulty: 'normal' };
+const updateWordToLearned = (user: any, wordId: string, stats: any): void => {
+  const wordData = { difficulty: 'normal', optional: { stats } };
   fetchChangeWordsState(user, wordId, wordData);
 };
 
-const setWordToDeleted = (user: any, wordId: string): void => {
+const setWordToDeleted = (user: any) => (wordId: string): void => {
   const wordData = { difficulty: 'easy' };
   fetchSetWordsState(user, wordId, wordData);
 };
 
-const updateWordToDeleted = (user: any, wordId: string): void => {
+const updateWordToDeleted = (user: any) => (wordId: string): void => {
   const wordData = { difficulty: 'easy' };
   fetchChangeWordsState(user, wordId, wordData);
 };
 
-const setWordToHard = (user: any, wordId: string): void => {
+const setWordToHard = (user: any) => (wordId: string): void => {
   const wordData = { difficulty: 'hard' };
   fetchSetWordsState(user, wordId, wordData);
 };
 
-const updateWordToHard = (user: any, wordId: string): void => {
-  const wordData = { difficulty: 'hard' };
+const updateWordToHard = (user: any) => (wordId: string, stats: any): void => {
+  const wordData = { ...stats, difficulty: 'hard' };
   fetchChangeWordsState(user, wordId, wordData);
 };
 
