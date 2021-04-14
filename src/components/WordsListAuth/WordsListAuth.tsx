@@ -25,9 +25,7 @@ const WordsList = ({
   const handleMethod = (wordId: string, method: any, params?: any) => async (e: any) => {
     e.preventDefault();
     e.stopPropagation();
-    new Promise((resolve) => {
-      resolve(method(wordId, params));
-    }).then(() => updateUserWords());
+    method(wordId, params).then(() => updateUserWords());
   };
 
   React.useEffect(() => {

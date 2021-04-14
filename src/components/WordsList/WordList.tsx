@@ -2,7 +2,15 @@ import React from 'react';
 import Spinner from '../Spinner';
 import WordData from '../WordData';
 
-const WordsList = ({ words, loading }: { words: any; loading: string }): JSX.Element => {
+const WordsList = ({
+  words,
+  loading,
+  button,
+}: {
+  words: any;
+  loading: string;
+  button: any;
+}): JSX.Element => {
   const [active, setActive] = React.useState(null);
 
   const handleWords = (i: number) => () => {
@@ -17,24 +25,39 @@ const WordsList = ({ words, loading }: { words: any; loading: string }): JSX.Ele
   }, []);
 
   return (
-    <ul className='words-list'>
-      {loading === 'idle' ? (
-        words.map((word: any, i: number) => {
-          const isActive = i === active;
-          const liClass = isActive ? 'activeWord' : '';
-          return (
-            <React.Fragment key={i}>
-              <li className={`collapsible ${liClass}`} onClick={handleWords(i)}>
-                {word.word}
-              </li>
-              {isActive && <WordData word={word} />}
-            </React.Fragment>
-          );
-        })
+    <>
+      {words.length === 0 ? (
+        'Нет слов'
       ) : (
-        <Spinner />
+        <ul className='words-list'>
+          {loading === 'idle' ? (
+            words.map((word: any, i: number) => {
+              const isActive = i === active;
+              const liClass = isActive ? 'activeWord' : '';
+              return (
+                <React.Fragment key={i}>
+                  <li className={`collapsible ${liClass}`} onClick={handleWords(i)}>
+                    {word.word} {word.userWord.difficulty === 'hard' && '__сложное слово__'}
+                  </li>
+                  {isActive && (
+                    <>
+                      <WordData word={word} />
+                      {button && (
+                        <button className={button.class} onClick={button.handler(word._id)}>
+                          {button.name}
+                        </button>
+                      )}
+                    </>
+                  )}
+                </React.Fragment>
+              );
+            })
+          ) : (
+            <Spinner />
+          )}
+        </ul>
       )}
-    </ul>
+    </>
   );
 };
 

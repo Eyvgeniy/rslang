@@ -38,7 +38,7 @@ const Book = (): JSX.Element => {
       <GroupNav />
       <div className={`book book-group${group}`}>
         <h3 className='book-title'>Список слов для изучения</h3>
-        <WordsList words={words} loading={loading} />
+        <WordsList words={words} loading={loading} button={null} />
         <div className='pages'>
           <button onClick={handleBackPage}>&#129044;</button> <span>{page}</span>{' '}
           <button onClick={handleForwardPage}>&#129046;</button>

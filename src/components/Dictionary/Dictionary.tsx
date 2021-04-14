@@ -6,22 +6,57 @@ import WordsList from '../WordsList';
 import GamesNav from '../GamesNav';
 import GroupNav from '../GroupNav';
 import './Dictionary.css';
-import { fetchLearnedWords } from '../../slice/dictionary';
+import { fetchLearnedWords, selectPage } from '../../slice/dictionary';
+import wordsApi from '../../api/wordsApi';
+
+const buttonName = 'Восстановить';
+const buttonClass = '';
 
 const Dictionary = (): JSX.Element => {
   const dispatch = useDispatch();
-  const { user, page, group, words, loading, section } = useSelector((state: any) => {
+  const { user, page, group, words, loading, section, totalCount } = useSelector((state: any) => {
     const user = {
       ...state.user.currentUser,
       token: state.user.token,
     };
-    const { page, group, learnedWords, loading } = state.dictionary;
-    return { user, page, group, words: learnedWords, loading, section: state.dictionary.section };
+    const { page, group, learnedWords, loading, totalCount } = state.dictionary;
+    return {
+      user,
+      page,
+      group,
+      words: learnedWords,
+      loading,
+      section: state.dictionary.section,
+      totalCount,
+    };
   });
+
+  const handleBackPage = () => {
+    dispatch(selectPage(page - 1));
+  };
+
+  const handleForwardPage = () => {
+    dispatch(selectPage(page + 1));
+  };
+
+  const isNextPage = totalCount > (page + 1) * 20;
+  const isPrevious = page > 0;
+
+  const handleRecoveButton = (user: any) => (wordId: string) => () => {
+    wordsApi
+      .fetchDeleteUserWord(user, wordId)
+      .then(() => dispatch(fetchLearnedWords({ user, page, group, section })));
+  };
+
+  const button = !(section === 'learned') && {
+    name: buttonName,
+    class: buttonClass,
+    handler: handleRecoveButton(user),
+  };
 
   React.useEffect(() => {
     dispatch(fetchLearnedWords({ user, page, group, section }));
-  }, [group, section]);
+  }, [group, section, page]);
 
   return (
     <div className='words-container'>
@@ -30,9 +65,11 @@ const Dictionary = (): JSX.Element => {
       <DictionaryNav />
       <div className='book book-group1'>
         <h3 className='book-title'>Список слов для изучения</h3>
-        <WordsList words={words} loading={loading} />
+        <WordsList words={words} loading={loading} button={button} />
         <div className='pages'>
-          <button>&#129044;</button> <span>{page}</span> <button>&#129046;</button>
+          {isPrevious && <button onClick={handleBackPage}>&#129044;</button>}
+          <span>{page}</span>
+          {isNextPage && <button onClick={handleForwardPage}>&#129046;</button>}
         </div>
       </div>
       <GamesNav />

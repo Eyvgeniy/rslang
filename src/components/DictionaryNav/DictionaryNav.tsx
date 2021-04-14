@@ -11,7 +11,7 @@ const sections = [
 const DictionaryNav = (): JSX.Element => {
   const dispatch = useDispatch();
 
-  const handleChangeSection = (id) => () => {
+  const handleChangeSection = (id: string) => () => {
     dispatch(selectSection(id));
     dispatch(selectPage(0));
   };
