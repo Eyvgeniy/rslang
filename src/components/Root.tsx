@@ -7,16 +7,18 @@ import Book from './Book';
 import BookAuth from './BookAuth';
 import Savanna from '../games/safari/index';
 import SprintGame from '../games/sprint/index';
-import Main from './Main';
-import Statistics from './Statistics';
+import AudioChallenge from '../games/audioChallenge/AudioChallenge';
 import CardGame from '../games/cards/index';
+import Main from './Main';
 import Dictionary from './Dictionary';
+import Statistics from './Statistics/Statistics';
 import HFTRoute from './HFTRoute';
 import { RootState } from '../models/RootState';
 import { Auth } from '../AppConstants';
 import { useAppDispatch } from './App';
 import { GetUserRequestModel } from '../models/User/UserModal';
 import { getUser, updateToken } from '../slice/user';
+import { fetchWords } from './../slice/words';
 
 interface RootProps {
   cookies: Cookies;
@@ -25,7 +27,7 @@ interface RootProps {
 const Root = ({ cookies }: RootProps): JSX.Element => {
   const user = useSelector((state: any) => state.user.currentUser);
   const dispatch = useAppDispatch();
-
+  const { group, page } = useSelector((state: RootState) => state.words);
   useEffect(() => {
     async function getUserHandler(model: GetUserRequestModel) {
       try {
@@ -34,6 +36,7 @@ const Root = ({ cookies }: RootProps): JSX.Element => {
         console.log(error);
       }
     }
+
     const token = cookies.get(Auth.COOKIE_TOKEN);
     if (token) {
       dispatch(updateToken(token));
@@ -42,6 +45,7 @@ const Root = ({ cookies }: RootProps): JSX.Element => {
         getUserHandler({ id, token });
       }
     }
+    dispatch(fetchWords({ group, page }));
   }, []);
 
   return (
@@ -52,6 +56,7 @@ const Root = ({ cookies }: RootProps): JSX.Element => {
           <Route path='/savanna' component={Savanna} />
           <Route path='/sprint' component={SprintGame} />
           <Route path='/cardGame' component={CardGame} />
+          <Route path='/audioChallenge' component={AudioChallenge} />
           <HFTRoute path='/statistics' component={Statistics} />
           <HFTRoute path='/dictionary' component={Dictionary} />
           <HFTRoute path='/' component={Main} />
@@ -62,6 +67,7 @@ const Root = ({ cookies }: RootProps): JSX.Element => {
           <Route path='/savanna' component={Savanna} />
           <Route path='/sprint' component={SprintGame} />
           <Route path='/cardGame' component={CardGame} />
+          <Route path='/audioChallenge' component={AudioChallenge} />
           <HFTRoute path='/' component={Main} />
         </Switch>
       )}

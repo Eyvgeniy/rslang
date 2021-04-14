@@ -1,4 +1,6 @@
-const host = 'https://eyvgeniy-rslang-be.herokuapp.com';
+import { AppData } from './AppConstants';
+
+const host = AppData.Host;
 
 const getWords = (page = 0, group = 0): string =>
   [host, `words?page=${page}&group=${group}`].join('/');
@@ -43,6 +45,8 @@ const getNewUserToken = (id: string): string => [host, 'users', id, 'tokens'].jo
 const getUserPhotoUrl = (fileName: string): string =>
   [host, 'users', `photo?filename=${fileName}`].join('/');
 
+const updateStatistics = (id: string): string => [host, 'users', id, 'statistics'].join('/');
+
 export default {
   getWords,
   getWordById,
@@ -59,4 +63,5 @@ export default {
   getNewUserToken,
   signIn,
   getUserPhotoUrl,
+  updateStatistics,
 };

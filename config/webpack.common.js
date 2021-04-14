@@ -28,7 +28,7 @@ module.exports = {
         loader: 'babel-loader',
       },
       {
-        test: /\.module\.s(a|c)ss$/,
+        test: /\.module\.s[ac]ss$/i,
         exclude: /node_modules/,
         use: [
           'style-loader',

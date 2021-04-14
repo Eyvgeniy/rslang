@@ -4,7 +4,8 @@ background-size: contain;
 height: 100vh;
 }
 .sprint-container {
-  margin: 55px auto;
+  padding-top: 55px;
+  margin: 0 auto;
   width: 28%;
   text-align: center;
 }

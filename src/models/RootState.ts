@@ -1,4 +1,5 @@
 import { UserModel } from "./User/UserModal";
+import { WordModel } from "./Words/WordModel";
 
 export interface UserState {
     currentUser: UserModel | null;
@@ -7,6 +8,17 @@ export interface UserState {
     loading: boolean,
     error: string | null,
 }
+
+export interface WordsState {
+    words: WordModel[];
+    allWords: WordModel[];
+    page: number;
+    group: number;
+    loading: 'idle' | 'pending';
+    error: string | null;
+}
+
 export interface RootState {
     user: UserState, 
+    words: WordsState
 }

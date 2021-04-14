@@ -26,13 +26,13 @@ export function Header(): JSX.Element {
             <Navbar.Toggle aria-controls='basic-navbar-nav' />
             <Navbar.Collapse id='basic-navbar-nav'>
               <Nav className='mr-auto'>
-                <Nav.Link href='#book'>Учебник</Nav.Link>
+                <Nav.Link href='/#/book'>Учебник</Nav.Link>
                 {currentUser && <Nav.Link href='#statistics'>Статистика</Nav.Link>}
                 <NavDropdown title='Игры' id='basic-nav-dropdown'>
-                  <NavDropdown.Item href='#savanna'>Саванна</NavDropdown.Item>
-                  <NavDropdown.Item href='#'>Аудиовызов</NavDropdown.Item>
-                  <NavDropdown.Item href='#sprint'>Спринт </NavDropdown.Item>
-                  <NavDropdown.Item href='#cardGame'>Карточки</NavDropdown.Item>
+                  <NavDropdown.Item href='/#/savanna'>Саванна</NavDropdown.Item>
+                  <NavDropdown.Item href='#/audioChallenge'>Аудиовызов</NavDropdown.Item>
+                  <NavDropdown.Item href='/#/sprint'>Спринт </NavDropdown.Item>
+                  <NavDropdown.Item href='/#/cardGame'>Карточки</NavDropdown.Item>
                 </NavDropdown>
               </Nav>
               {currentUser && <UserInfo user={currentUser} />}

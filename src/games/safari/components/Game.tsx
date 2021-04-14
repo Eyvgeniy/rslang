@@ -2,12 +2,13 @@
 import * as React from 'react';
 import cn from 'classnames';
 import rafTimeout from '../rafTimeout';
+import { GameItem } from '../../../getWrongAnswers';
 
 interface GameProps {
   gameState: string;
   setGameState: (state: string) => void;
   setPosition: (cb: (number: number) => number) => void;
-  words: Array<{ question: string; rightAnswer: number; answers: Array<string> }>;
+  words: GameItem[];
 }
 
 const defaultState = {
@@ -96,9 +97,11 @@ const Game = (props: GameProps): JSX.Element => {
   }, [gameState, state]);
 
   const currentRound = words[state.round];
+  if(!currentRound)
+    return null;
   return (
     <div className="safari-game">
-      <div className={questionClass}>{currentRound.question}</div>
+      <div className={questionClass}>{currentRound.correctWord.word}</div>
       <div className="safari-answers">
         {currentRound.answers.map((answer, i) => {
           const buttonClass = cn(
@@ -113,7 +116,7 @@ const Game = (props: GameProps): JSX.Element => {
           return (
             <button className={buttonClass} key={i} onClick={handleAnswer(i)}>{`${
               i + 1
-            } ${answer}`}</button>
+            } ${answer.wordTranslate}`}</button>
           );
         })}
       </div>

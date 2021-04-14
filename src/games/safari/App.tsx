@@ -5,33 +5,28 @@ import Game from './components/Game';
 import { fetchWords } from '../../slice/words';
 import './App.css';
 import routes from '../../routes';
-import getWrongAnswers from '../../getWrongAnswers';
+import getWrongAnswers, { GameItem } from '../../getWrongAnswers';
+import { RootState } from '../../models/RootState';
+import { AppData } from './../../AppConstants';
 
 const App = (): JSX.Element => {
   const [gameState, setGameState] = React.useState('start');
   const [position, setPosition] = React.useState(100);
-  const [wordsForGame, setWordsForGame] = React.useState([]);
-  const dispatch = useDispatch();
+  const [wordsForGame, setWordsForGame] = React.useState([] as GameItem[]);
 
-  const words = useSelector((state: any) => state.words);
+  const words = useSelector((state: RootState) => state.words);
   React.useEffect(() => {
-    if (words.words.length === 0) {
-      dispatch(fetchWords({ group: words.group, page: words.page }));
-    } else {
-      fetch(routes.getWords(words.page + 1, words.group))
-        .then((response) => response.json())
-        .then((wordsData) => {
-          const answersForWords = getWrongAnswers(wordsData, words.words);
-          const wordsForCheckWithAnswer = words.words.map(
-            ({ word }: { word: string }, i: number) => ({
-              question: word,
-              ...answersForWords[i],
-            }),
-          );
-          setWordsForGame(wordsForCheckWithAnswer);
-        });
-    }
-  }, [words.words]);
+    fetch(routes.getWords(words.page + 1, words.group))
+      .then((response) => response.json())
+      .then((wordsData) => {
+        const answersForWords = getWrongAnswers(
+          wordsData,
+          words.words,
+          AppData.SavannaNumberOfAnswers,
+        );
+        setWordsForGame(answersForWords);
+      });
+  }, [words]);
 
   // console.log(wordsForCheckWithAnswer);
   return (

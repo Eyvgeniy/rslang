@@ -3,13 +3,20 @@ import Progress from './Progress';
 import useSound from 'use-sound';
 import "bootstrap/dist/css/bootstrap.min.css";
 import './Style.css';
+import Statistics from './Statistics'
+
+interface GameProps {
+  gameState: string;
+  setGameState: (state: string) => void;
+  wordsArr: Array<{ id: string; word: string; wordTranslate: string }>;
+}
 
 
-
-function SprintGame(): JSX.Element {
-
+function SprintGame(props: GameProps): JSX.Element {
+  
+  const { wordsArr } = props;
   const [data, setData] = useState([]);
-  const [words, setWords] = useState([{},{word: 'hello', id: "123456"}]);
+  const [words, setWords] = useState([{},{word: 'hello', id: "123456", wordTranslate: 'привет'}]);
   const [wordsTranslate, setWordsTranslate] = useState([{},{wordTranslate: 'привет', id: "123456"}]);
   const [score, setScore] = useState(0);
   const [iconOneActive, setIconOneActive] = useState(0);
@@ -26,22 +33,25 @@ function SprintGame(): JSX.Element {
   const [playSoundLevel] = useSound('../../../public/assets/level.mp3')
   const [playSoundStart] = useSound('../../../public/assets/start.mp3')
   const [startGame, setStartGame] = useState(false)
+  const [finishGame, setFinishGame] = useState(false)
+  const [answerMistake, setAnswerMistake] = useState([])
+  const [answerCorrect, setAnswerCorrect] = useState([])
 
     useEffect(() => {
         fetch('http://eyvgeniy-rslang-be.herokuapp.com/words?group=0&page=0')
             .then(res => res.json())
             .then(result => {
                 setData(result);
-                getWords(result)
+                getWords(wordsArr)
             });
     }, [setData, setWords])
 
-    function getWords(res: any[]): void {
+    function getWords(wordsArr: any[]): void {
         const arrWords: Array<object> = [];
         const arrWordsTranslate: Array<object> = [];
-        res.forEach((words): void => {
-          arrWords.push({'id' : `${words.id}`, 'word' : `${words.word}`});
-          arrWordsTranslate.push({'id' : `${words.id}`, 'wordTranslate' : `${words.wordTranslate}`});
+        wordsArr.forEach((word): void => {
+          arrWords.push({'id' : `${word.id}`, 'word' : `${word.word}`, 'wordTranslate' : `${word.wordTranslate}`});
+          arrWordsTranslate.push({'id' : `${word.id}`, 'wordTranslate' : `${word.wordTranslate}`});
         })
         arrWords.sort(() => Math.random() - 0.5);
         arrWordsTranslate.sort(() => Math.random() - 0.5);
@@ -52,13 +62,19 @@ function SprintGame(): JSX.Element {
 
     useEffect(() => {
       if (startGame) playSoundStart();
+
     }, [startGame]);
+    useEffect(() => {
+      if (words[0] === undefined) setFinishGame(true);
+      console.log(words.length)
+    }, [words]);
     
 
     function getAnswer(ans: boolean): void {
-
-
       if((words[0].id === wordsTranslate[0].id) !== ans) {
+
+        answerMistake.push({word: words[0].word, wordTranslate: words[0].wordTranslate})
+
         words.splice(0, 1);
         wordsTranslate.splice(0, 1);
         setWords([...words]);
@@ -73,6 +89,8 @@ function SprintGame(): JSX.Element {
         }, 500);
         console.log('не угадал')
       }    else  if((words[0].id === wordsTranslate[0].id) === ans) {
+        answerCorrect.push({word: words[0].word, wordTranslate: words[0].wordTranslate})
+
         words.splice(0, 1);
         wordsTranslate.splice(0, 1);
         setWords([...words]);
@@ -87,9 +105,6 @@ function SprintGame(): JSX.Element {
         }, 500);
         console.log('угадал')
       }
-
-
-
 
     }
 
@@ -167,7 +182,7 @@ function SprintGame(): JSX.Element {
   return (
     
     <div className="App">
-      <button onClick={() => playSoundStart()}>Старт</button>
+      {words.length !== 0 ? (
       <div className='sprint-container'>
         <span className="score-count">{score}</span>
         <div className='sprint-card'>
@@ -211,11 +226,11 @@ function SprintGame(): JSX.Element {
             </div>
           </div>
         </div>
-      </div>
-      
       <div className='sprint-timer'>
       <Progress />
       </div>
+      </div>
+      ) : <Statistics answerMistake={answerMistake} answerCorrect={answerCorrect}/>}
     </div>
     
   );

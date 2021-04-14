@@ -1,6 +1,8 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { WordModel } from '../models/Words/WordModel';
+import { WordsState } from '../models/RootState';
 import routes from '../routes';
 // import { DeleteWordModel } from '../models/Word/WordModel';
 
@@ -50,11 +52,12 @@ const wordsSlice = createSlice({
     words: [],
     userWords: [],
     userWordsLoading: 'idle',
+    allWords: [],
     page: 0,
     group: 0,
     loading: 'idle',
     error: null,
-  },
+  } as WordsState,
   reducers: {
     selectPage(state, action): void {
       state.page = action.payload;
@@ -68,7 +71,9 @@ const wordsSlice = createSlice({
       state.loading = 'pending';
     });
     builder.addCase(fetchWords.fulfilled, (state, action) => {
-      state.words = action.payload as any;
+      const words = action.payload as WordModel[];
+      state.words = words;
+      state.allWords = [...state.allWords, ...words];
       state.loading = 'idle';
     });
     builder.addCase(fetchWords.rejected, (state, action) => {
