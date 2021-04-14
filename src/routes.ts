@@ -30,7 +30,7 @@ const getUserWords = (id: string, page = 0, group = 0): string =>
 
 const getAllUserWords = (id: string): string => [host, `users/${id}/words`].join('/');
 
-const setWordState = (userId: string, wordId: string) =>
+const setWordState = (userId: string, wordId: string): string =>
   [host, `users/${userId}/words/${wordId}`].join('/');
 
 const signIn = (): string => [host, 'signin'].join('/');
