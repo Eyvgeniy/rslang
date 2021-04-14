@@ -10,6 +10,18 @@ const getLearnedWords = (id: string, page = 0, group = 0): string =>
     `users/${id}/aggregatedWords?page=${page}&group=${group}&wordsPerPage=20&filter={"$or":[{"userWord.difficulty":"normal"},{"userWord.difficulty":"hard"}]}`,
   ].join('/');
 
+const getHardWords = (id: string, page = 0, group = 0): string =>
+  [
+    host,
+    `users/${id}/aggregatedWords?page=${page}&group=${group}&wordsPerPage=20&filter={"userWord.difficulty":"hard"}`,
+  ].join('/');
+
+const getDeletedWords = (id: string, page = 0, group = 0): string =>
+  [
+    host,
+    `users/${id}/aggregatedWords?page=${page}&group=${group}&wordsPerPage=20&filter={"userWord.difficulty":"easy"}`,
+  ].join('/');
+
 const getUserWords = (id: string, page = 0, group = 0): string =>
   [
     host,
@@ -35,6 +47,8 @@ export default {
   getWords,
   getWordById,
   getLearnedWords,
+  getDeletedWords,
+  getHardWords,
   getUserWords,
   getAllUserWords,
   setWordState,
