@@ -13,7 +13,6 @@ const AudioChallengeRound: FunctionComponent<AudioChallengeRoundProps> = ({item,
     const [clickedIndex, setClickedIndex] = useState(null);
     const [prevItem, setPrevItem] = useState(null);
 
-
     if (item !== prevItem) {
         setClickedIndex(null);
         setPrevItem(item);

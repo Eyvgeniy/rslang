@@ -1,9 +1,9 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
-import Start from "./components/Start";
 import CardGame from "./components/CardGame";
 import "./App.css";
 import routes from "../../routes";
+import Start from "../components/Start/Start";
 
 const App = (): JSX.Element => {
   const [gameState, setGameState] = React.useState("start");
@@ -18,7 +18,10 @@ const App = (): JSX.Element => {
       });
   }, []);
 
-  
+  const handleStart = () => {
+      setGameState('waitingAnswer');
+  }
+
   return (
     <section className="main-container">
       <div className="close-button">
@@ -26,7 +29,12 @@ const App = (): JSX.Element => {
           <span className="close-button__text">&times;</span>
         </a>
       </div>
-      {gameState === "start" ? <Start setState={setGameState} /> 
+      {gameState === "start" ? 
+        <Start 
+          gameName="Карточки"
+          gameDesription="Изучай английсский и живопись вместе. Тренировка улучшает восприятие английсской речи на слух."
+          onStartButtonClickHandler={handleStart}
+        /> 
       : <CardGame 
           words={wordsForGame}
           gameState={gameState}

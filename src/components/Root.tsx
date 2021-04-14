@@ -17,7 +17,7 @@ import { useAppDispatch } from './App';
 import { GetUserRequestModel, UserModel } from './../models/User/UserModal';
 import { getUser, updateToken } from '../slice/user';
 import { useSelector } from 'react-redux';
-import { fetchWords } from './../slice/words';
+import { fetchWords, getUserWords } from './../slice/words';
 
 interface RootProps {
   cookies: Cookies,
@@ -29,12 +29,12 @@ const Root = ({cookies}:RootProps): JSX.Element => {
   useEffect(() => {
     async function getUserHandler(model: GetUserRequestModel) {
       try{
-        const getUserResult = await dispatch(getUser(model));
+        await dispatch(getUser(model));
+        await dispatch(getUserWords({userId: model.id, token: token}))
       }catch(error){
         console.log(error);
       }
     }
-
     const token = cookies.get(Auth.COOKIE_TOKEN);
     if(token){
       dispatch(updateToken(token));

@@ -4,7 +4,7 @@ import { Button, Form, FormControl, InputGroup, Modal, Toast } from "react-boots
 // import styles from "./RegisterForm.module.scss";
 import { Cookies, withCookies } from "react-cookie";
 import { RootState } from "../../models/RootState";
-import {createUser, signIn} from "../../slice/user"
+import {createUser, getUser, signIn} from "../../slice/user"
 import { Auth } from "../../AppConstants";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { SignInResponseModel, UserModel } from "../../models/User/UserModal";
@@ -56,6 +56,11 @@ const RegisterModal = ({show, onShowChange, cookies}: RegisterFormProps): JSX.El
                     if(model){
                         cookies.set(Auth.COOKIE_TOKEN, model.token);
                         handleClose();
+                        try{
+                            await dispatch(getUser({id: model.userId, token: model.token}));
+                        }catch(error){
+                            console.log(error);
+                        }
                     }
                 }catch(error){
                     setErrorMessage(error);

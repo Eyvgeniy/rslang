@@ -1,8 +1,11 @@
 /* eslint-disable no-param-reassign */
+import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { WordModel } from '../models/Words/WordModel';
 import { WordsState } from '../models/RootState';
 import routes from '../routes';
+import { CreateUserWordsRequestModel, GetUserWordsRequestModel } from '../models/UserWord/UserWord';
+import { UserWordModel } from './../models/UserWord/UserWord';
 
 export const fetchWords = createAsyncThunk(
   'words/fetchStatus',
@@ -24,11 +27,72 @@ export const fetchWords = createAsyncThunk(
   },
 );
 
+export const getUserWords = createAsyncThunk(
+  'userWords/get',
+  async (model: GetUserWordsRequestModel, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(routes.getUserWords(model.userId), {
+        headers:{
+          'Authorization': `Bearer ${model.token}`,
+        }
+      });
+      return response.data;
+    } catch (err) {
+      const error = err;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const createUserWord = createAsyncThunk(
+  'userWords/create',
+  async ( model: CreateUserWordsRequestModel, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(routes.createUserWord(model.userId, model.wordId), model.word, {
+        headers:{
+          'Authorization': `Bearer ${model.token}`,
+        }
+      });
+      return response.data;
+    } catch (err) {
+      const error = err;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const updateUserWord = createAsyncThunk(
+  'userWords/update',
+  async ( model: CreateUserWordsRequestModel, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(routes.updateUserWord(model.userId, model.wordId), model.word, {
+        headers:{
+          'Authorization': `Bearer ${model.token}`,
+        }
+      });
+      return response.data;
+    } catch (err) {
+      const error = err;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
 const wordsSlice = createSlice({
   name: 'words',
   initialState: {
     words: [],
     allWords: [],
+    userWords: [],
     page: 0,
     group: 0,
     loading: 'idle',
@@ -43,6 +107,7 @@ const wordsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    //GET WORDS
     builder.addCase(fetchWords.pending, (state) => {
       state.loading = 'pending';
     });
@@ -63,6 +128,75 @@ const wordsSlice = createSlice({
       }
       state.loading = 'idle';
     });
+
+    //GET USER WORDS
+    builder.addCase(getUserWords.pending, (state) => {
+      state.loading = 'pending';
+    });
+    builder.addCase(getUserWords.fulfilled, (state, action) => {
+      const words = action.payload as UserWordModel[];
+      state.userWords = words;
+      state.loading = 'idle';
+    });
+    builder.addCase(getUserWords.rejected, (state, action) => {
+      if (action.payload) {
+        const payload: { errorMessage: string } = action.payload as {
+          errorMessage: string;
+        };
+        state.error = payload.errorMessage;
+      } else {
+        state.error = action.error.message;
+      }
+      state.loading = 'idle';
+    });
+
+    //CREATE USER WORD
+    builder.addCase(createUserWord.pending, (state) => {
+      state.loading = 'pending';
+    });
+    builder.addCase(createUserWord.fulfilled, (state, action) => {
+      const word = action.payload as UserWordModel;
+      state.userWords = [...state.userWords, word];
+      state.loading = 'idle';
+    });
+    builder.addCase(createUserWord.rejected, (state, action) => {
+      if (action.payload) {
+        const payload: { errorMessage: string } = action.payload as {
+          errorMessage: string;
+        };
+        state.error = payload.errorMessage;
+      } else {
+        state.error = action.error.message;
+      }
+      state.loading = 'idle';
+    });
+
+    //UPDATE USER WORD
+    builder.addCase(updateUserWord.pending, (state) => {
+      state.loading = 'pending';
+    });
+    builder.addCase(updateUserWord.fulfilled, (state, action) => {
+      const word = action.payload as UserWordModel;
+      state.userWords = state.userWords.map((item, index) => {
+        if(item.id === word.id) {
+          return word;
+        }
+        return item;
+      });
+      state.loading = 'idle';
+    });
+    builder.addCase(updateUserWord.rejected, (state, action) => {
+      if (action.payload) {
+        const payload: { errorMessage: string } = action.payload as {
+          errorMessage: string;
+        };
+        state.error = payload.errorMessage;
+      } else {
+        state.error = action.error.message;
+      }
+      state.loading = 'idle';
+    });
+
   },
 });
 

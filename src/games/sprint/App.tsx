@@ -1,13 +1,14 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
-import Start from "./components/Start";
 import SprintGame from "./components/SprintGame";
 import "./App.css";
 import routes from "../../routes";
+import Start from "../components/Start/Start";
+import { WordModel } from "../../models/Words/WordModel";
 
 const App = (): JSX.Element => {
   const [gameState, setGameState] = React.useState("start");
-  const [wordsForGame, setWordsForGame] = React.useState([]);
+  const [wordsForGame, setWordsForGame] = React.useState([]as WordModel[]);
   const wordsArr = useSelector((state: any) => state.words);
   React.useEffect(() => {
     fetch(routes.getWords(wordsArr.page, wordsArr.group))
@@ -17,6 +18,11 @@ const App = (): JSX.Element => {
       });
   }, []);
 
+  
+  const handleStart = () => {
+    setGameState('waitingAnswer');
+  }
+
   return (
     <section className="main-container-sprint">
       <div className="close-button">
@@ -24,7 +30,18 @@ const App = (): JSX.Element => {
         <span className="close-button__text">&times;</span>
         </a>
       </div>
-      {gameState === "start" ? <Start setState={setGameState} /> : <SprintGame wordsArr={wordsForGame} gameState={gameState} setGameState={setGameState}/>}
+      {gameState === "start" ? 
+        <Start 
+          gameName="Спринт"
+          gameDesription="Истинная гонка на проверку знаний. Укажите верно ли указан перевод слова."
+          onStartButtonClickHandler={handleStart}
+        /> 
+      : <SprintGame 
+          wordsArr={wordsForGame} 
+          gameState={gameState} 
+          setGameState={setGameState}
+        />
+      }
     </section>
   );
 };

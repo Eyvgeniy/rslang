@@ -5,6 +5,7 @@ import { Button, Form, FormControl, InputGroup, Modal, Toast } from "react-boots
 import { Cookies, withCookies } from "react-cookie";
 import { RootState } from "../../models/RootState";
 import { getUser, signIn} from "../../slice/user"
+import { getUserWords } from "../../slice/words";
 import { Auth } from "../../AppConstants";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { SignInResponseModel } from "../../models/User/UserModal";
@@ -36,6 +37,7 @@ const LogInModal = ({show, onShowChange, cookies}: LogInModalProps): JSX.Element
                 handleClose();
                 try{
                     await dispatch(getUser({id: model.userId, token: model.token}));
+                    await dispatch(getUserWords({userId: model.userId, token: model.token}));
                 }catch(error){
                     console.log(error);
                 }

@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
-import Start from './components/Start';
 import Game from './components/Game';
 import './App.css';
 import routes from '../../routes';
 import getWrongAnswers, { GameItem } from '../../getWrongAnswers';
 import { RootState } from '../../models/RootState';
 import { AppData } from './../../AppConstants';
+import Start from '../components/Start/Start';
 
 const App = (): JSX.Element => {
   const [gameState, setGameState] = React.useState('start');
@@ -24,21 +24,30 @@ const App = (): JSX.Element => {
   }, [words]);
 
   // console.log(wordsForCheckWithAnswer);
+  const handleStart = () => {
+    setGameState('waitingAnswer');
+  }
   return (
     <section className="savanna-main-container" style={{ backgroundPositionY: `${position}%` }}>
       <div className="close-button">
-        <span
-          className="close-button__text"
-          onClick={() => {
-            setGameState('start');
-            setPosition(100);
-          }}
-        >
-          &times;
-        </span>
+        <a href='#/home'>
+          <span
+            className="close-button__text"
+            onClick={() => {
+              setGameState('start');
+              setPosition(100);
+            }}
+          >
+            &times;
+          </span>        
+        </a>
       </div>
       {gameState === 'start' ? (
-        <Start setState={setGameState} />
+        <Start 
+          gameName="Саванна"
+          gameDesription="Тренировка Саванна развивает словарный запас. Чем больше слов ты знаешь, тем легче тебе будет общаться."
+          onStartButtonClickHandler={handleStart}
+        /> 
       ) : (
         <Game
           words={wordsForGame}

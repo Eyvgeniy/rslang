@@ -7,6 +7,19 @@ export class GameState {
     public static readonly Start = 'start';
 }
 
+export class GameType {
+    public static readonly Savanna = 'savanna';
+    public static readonly AudioChallenge = 'audioChallenge';
+    public static readonly Sprint = 'sprint';
+    public static readonly Cards = 'cards';
+}
+
+export class WordDifficulty{
+    public static readonly Easy = 'easy';
+    public static readonly Normal = 'easy';
+    public static readonly Difficult = 'difficult';
+}
+
 export class AppData {
     public static readonly Host: string = 'https://eyvgeniy-rslang-be.herokuapp.com';
 

@@ -3,10 +3,11 @@ import { GameItem } from "../../../getWrongAnswers";
 import AudioChallengeRound from "./AudioChallengeRound";
 import { WordModel } from "../../../models/Words/WordModel";
 import useSound from "use-sound";
-import { AppData } from "../../../AppConstants";
+import { AppData, GameType } from "../../../AppConstants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeUp, faPlayCircle } from "@fortawesome/free-solid-svg-icons";
 import styles from "./AudioChallengeRound.module.scss";
+import GameStatistics from "../../components/Statistics/Statistics";
 
 type AudioChallengeGameProps = {
     wordsForGame: GameItem[];
@@ -18,6 +19,9 @@ const AudioChallengeGame: FunctionComponent<AudioChallengeGameProps> = ({wordsFo
     const [currentRound, setCurrentRound] = React.useState(0);
     const [correctWords, setCorrectWords] = React.useState([] as WordModel[]);
     const [wrongWords, setWrongWords] = React.useState([] as WordModel[]);
+    const [currentSeries, setCurrentSeries] = React.useState(0);
+    const [bestSeries, setBestSeries] = React.useState(0);
+
     const [currentGameItem, setCurrentGameItem] = React.useState(null as GameItem | null);
     const [shoudOpen, setShoudOpen] = React.useState(false);
     
@@ -25,13 +29,21 @@ const AudioChallengeGame: FunctionComponent<AudioChallengeGameProps> = ({wordsFo
     const [play, { isPlaying }] = useSound(AppData.Host + '/' + wordsForGame?.[currentRound]?.correctWord.audio);
 
     const handleClick = (isCorrect: boolean, word: WordModel) => {
+        let previosSeries = currentSeries;
         if(isCorrect){
             correctWords.push(word)
             setCorrectWords(correctWords);
+            setCurrentSeries(currentSeries + 1);
+            previosSeries++;
         }else{
             wrongWords.push(word)
             setWrongWords(wrongWords);
+            setCurrentSeries(0);
         }
+        if(bestSeries < previosSeries){
+            setBestSeries(previosSeries);
+        }
+
         setShoudOpen(true);
         setTimeout(()=> {
             setCurrentRound(currentRound + 1);
@@ -71,6 +83,14 @@ const AudioChallengeGame: FunctionComponent<AudioChallengeGameProps> = ({wordsFo
                         onAnswerChooseHandler={handleClick}
                     />
                 </>
+            }
+            {currentRound === wordsForGame.length && 
+                <GameStatistics 
+                    correctAnswers={correctWords}
+                    mistakesAnswers={wrongWords}
+                    bestSeriesLength={bestSeries} 
+                    type={GameType.AudioChallenge}
+                />
             }
         </div>
     );

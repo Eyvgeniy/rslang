@@ -3,12 +3,14 @@ import Progress from './Progress';
 import useSound from 'use-sound';
 import "bootstrap/dist/css/bootstrap.min.css";
 import './Style.css';
-import Statistics from './Statistics'
+import GameStatistics from '../../components/Statistics/Statistics'
+import { GameType } from './../../../AppConstants';
+import { WordModel } from "../../../models/Words/WordModel";
 
 interface GameProps {
   gameState: string;
   setGameState: (state: string) => void;
-  wordsArr: Array<{ id: string; word: string; wordTranslate: string }>;
+  wordsArr: Array<WordModel>;
 }
 
 
@@ -16,8 +18,8 @@ function SprintGame(props: GameProps): JSX.Element {
   
   const { wordsArr } = props;
   const [data, setData] = useState([]);
-  const [words, setWords] = useState([{},{word: 'hello', id: "123456", wordTranslate: 'привет'}]);
-  const [wordsTranslate, setWordsTranslate] = useState([{},{wordTranslate: 'привет', id: "123456"}]);
+  const [words, setWords] = useState([]);
+  const [wordsTranslate, setWordsTranslate] = useState([]);
   const [score, setScore] = useState(0);
   const [iconOneActive, setIconOneActive] = useState(0);
   const [iconTwoActive, setIconTwoActive] = useState(0);
@@ -34,8 +36,8 @@ function SprintGame(props: GameProps): JSX.Element {
   const [playSoundStart] = useSound('../../../public/assets/start.mp3')
   const [startGame, setStartGame] = useState(false)
   const [finishGame, setFinishGame] = useState(false)
-  const [answerMistake, setAnswerMistake] = useState([])
-  const [answerCorrect, setAnswerCorrect] = useState([])
+  const [answerMistake, setAnswerMistake] = useState([] as WordModel[])
+  const [answerCorrect, setAnswerCorrect] = useState([] as WordModel[])
 
     useEffect(() => {
         fetch('http://eyvgeniy-rslang-be.herokuapp.com/words?group=0&page=0')
@@ -46,7 +48,7 @@ function SprintGame(props: GameProps): JSX.Element {
             });
     }, [setData, setWords])
 
-    function getWords(wordsArr: any[]): void {
+    function getWords(wordsArr: WordModel[]): void {
         const arrWords: Array<object> = [];
         const arrWordsTranslate: Array<object> = [];
         wordsArr.forEach((word): void => {
@@ -73,7 +75,7 @@ function SprintGame(props: GameProps): JSX.Element {
     function getAnswer(ans: boolean): void {
       if((words[0].id === wordsTranslate[0].id) !== ans) {
 
-        answerMistake.push({word: words[0].word, wordTranslate: words[0].wordTranslate})
+        answerMistake.push(words[0].word)
 
         words.splice(0, 1);
         wordsTranslate.splice(0, 1);
@@ -89,7 +91,7 @@ function SprintGame(props: GameProps): JSX.Element {
         }, 500);
         console.log('не угадал')
       }    else  if((words[0].id === wordsTranslate[0].id) === ans) {
-        answerCorrect.push({word: words[0].word, wordTranslate: words[0].wordTranslate})
+        answerCorrect.push(words[0])
 
         words.splice(0, 1);
         wordsTranslate.splice(0, 1);
@@ -173,11 +175,7 @@ function SprintGame(props: GameProps): JSX.Element {
         return () => {
           window.removeEventListener('keyup', upHandler);
         };
-    }); 
-  
-
-    
-
+    });  
 
   return (
     
@@ -230,7 +228,7 @@ function SprintGame(props: GameProps): JSX.Element {
       <Progress />
       </div>
       </div>
-      ) : <Statistics answerMistake={answerMistake} answerCorrect={answerCorrect}/>}
+      ) : <GameStatistics mistakesAnswers={answerMistake} correctAnswers={answerCorrect} type={GameType.Sprint} bestSeriesLength={0}/>}
     </div>
     
   );
