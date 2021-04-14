@@ -5,11 +5,12 @@ import useSound from "use-sound";
 import Progress from "./Progress";
 import "./style.css";
 import routes from "../../../routes";
+import StatisticsGame from './StatisticsGame'
 
 interface GameProps {
   gameState: string;
   setGameState: (state: string) => void;
-  words: Array<{ word: string; id: string; image: string; audio: string }>;
+  words: Array<{ word: string; id: string; image: string; audio: string; wordTranslate: string }>;
 }
 
 const CardGame = (props: GameProps): JSX.Element => {
@@ -25,6 +26,7 @@ const CardGame = (props: GameProps): JSX.Element => {
       audio: 'http://eyvgeniy-rslang-be.herokuapp.com/files/01_0005.mp3"',
       id: "5e9f5ee35eb9e72bc21af4a0",
       word: "agree",
+      wordTranslate: 'согласен'
     },
   ]);
   const [correct, setCorrect] = useState(0);
@@ -36,6 +38,10 @@ const CardGame = (props: GameProps): JSX.Element => {
   const [playCorrect] = useSound("../../../public/assets/correct.mp3");
   const [playError] = useSound("../../../public/assets/error.mp3");
   const [correctCards, setCorrectCards] = useState([]);
+  const [seriesLength, setSeriesLength] = useState(0);
+  const [arraySeriesLength, setArraySeriesLength] = useState([])
+  const [timeStatistic, setTimeStatistic] = useState(true);
+  
 
   useEffect(() => {
     fetch("http://eyvgeniy-rslang-be.herokuapp.com/words?group=0&page=0")
@@ -54,6 +60,7 @@ const CardGame = (props: GameProps): JSX.Element => {
         audio: `http://eyvgeniy-rslang-be.herokuapp.com/${word.audio}`,
         id: `${word.id}`,
         word: `${word.word}`,
+        wordTranslate: `${word.wordTranslate}`,
       });
     });
     return arr;
@@ -72,6 +79,7 @@ const CardGame = (props: GameProps): JSX.Element => {
   }
 
   function checkCorrectAnswer(): void {
+    setSeriesLength((seriesLength) => seriesLength + 1)
     playCorrect();
     setSounds([...sounds.slice(1)]);
     setCorrect((prevCorrect) => prevCorrect + 1);
@@ -84,20 +92,23 @@ const CardGame = (props: GameProps): JSX.Element => {
   function checkErrorAnswer(): void {
     playError();
     setIncorrect((prevIncorrect) => prevIncorrect + 1);
+    setArraySeriesLength([...arraySeriesLength, seriesLength])
+    setSeriesLength(0)
   }
 
   function checkArrayWords(e: any) {
-    if (e.target.dataset.id === sounds[0].id && !incorrectWords.includes(sounds[0].word)) {
-      setCorrectWords([...correctWords, sounds[0].word]);
-    } else if (e.target.dataset.id !== sounds[0].id && !incorrectWords.includes(sounds[0].word)) {
-      setIncorrectWords([...incorrectWords, sounds[0].word])
+    if (e.target.dataset.id === sounds[0].id && !(incorrectWords.find(item => item.word === sounds[0].word))) {
+      setCorrectWords([...correctWords, sounds[0]]);
+    } else if (e.target.dataset.id !== sounds[0].id && !(incorrectWords.find(item => item.word === sounds[0].word))) {
+      setIncorrectWords([...incorrectWords, sounds[0]])
     } else return
   }
 
   function completeGame(): void {
     setCorrect(0);
     setIncorrect(0);
-  }
+    setSeriesLength(Math.max.apply(null, arraySeriesLength))
+}
 
   const sendData = useCallback(() => {
     fetch(routes.updateStatistics("6072a1121f132e00156b2f11"), {
@@ -115,15 +126,16 @@ const CardGame = (props: GameProps): JSX.Element => {
 
   return (
     <div className="app">
-      <div className="block-game">
+       {sounds.length !== 0 && timeStatistic? (
+       <div className="block-game">
         <div className="menu">
           <div>Correct {correct}</div>
           <div>
-            <Progress />
+            <Progress setTimeStatistic={setTimeStatistic}/>
           </div>
           <div className="incorrect">Incorrect {incorrect}</div>
         </div>
-        {typeof words !== "undefined" ? (
+       
           <div
             className="d-flex flex-wrap justify-content-around cards"
             onClick={(e) => pressCard(e)}
@@ -146,10 +158,7 @@ const CardGame = (props: GameProps): JSX.Element => {
                 );
               }
             )}
-          </div>
-        ) : (
-          ""
-        )}
+          </div>           
         <button
           type="button"
           className="btn btn-secondary d-block mx-auto"
@@ -157,7 +166,8 @@ const CardGame = (props: GameProps): JSX.Element => {
         >
           Start game
         </button>
-      </div>
+      </div> 
+      ) : <StatisticsGame correctWords={correctWords} incorrectWords={incorrectWords} seriesLength={seriesLength} />}
     </div>
   );
 };
