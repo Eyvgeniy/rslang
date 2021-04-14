@@ -2,6 +2,8 @@ import { AppData } from './AppConstants';
 
 const host = AppData.Host;
 
+const addHost = (src: string): string => [host, src].join('/');
+
 const getWords = (page = 0, group = 0): string =>
   [host, `words?page=${page}&group=${group}`].join('/');
 const getWordById = (id: string): string => [host, 'word', id].join('/');
@@ -48,6 +50,7 @@ const getUserPhotoUrl = (fileName: string): string =>
 const updateStatistics = (id: string): string => [host, 'users', id, 'statistics'].join('/');
 
 export default {
+  addHost,
   getWords,
   getWordById,
   getLearnedWords,
