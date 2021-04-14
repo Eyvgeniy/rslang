@@ -1,5 +1,6 @@
 import React from 'react';
 import Spinner from '../Spinner';
+import WordData from '../WordData';
 
 const WordsList = ({ words, loading }: { words: any; loading: string }): JSX.Element => {
   const [active, setActive] = React.useState(null);
@@ -26,20 +27,7 @@ const WordsList = ({ words, loading }: { words: any; loading: string }): JSX.Ele
               <li className={`collapsible ${liClass}`} onClick={handleWords(i)}>
                 {word.word}
               </li>
-              {isActive && (
-                <div className='content'>
-                  <p>{`Транскрипция ${word.transcription}`}</p>
-                  <p>{`Перевод - ${word.wordTranslate}`}</p>
-                  <p dangerouslySetInnerHTML={{ __html: `Применение - ${word.textMeaning}` }}></p>
-                  <p>{`Применение перевод - ${word.textMeaningTranslate}`}</p>
-                  <img
-                    className='word-image'
-                    src={`https://eyvgeniy-rslang-be.herokuapp.com/${word.image}`}
-                    height='300px'
-                    width='400px'
-                  />
-                </div>
-              )}
+              {isActive && <WordData word={word} />}
             </React.Fragment>
           );
         })

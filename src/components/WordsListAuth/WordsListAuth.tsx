@@ -1,7 +1,6 @@
 import React from 'react';
-// import { useSelector, useDispatch } from 'react-redux';
 import Spinner from '../Spinner';
-// import { fetchWords } from '../../slice/words';
+import WordData from '../WordData';
 
 const WordsList = ({
   words,
@@ -59,18 +58,7 @@ const WordsList = ({
               </li>
               {isActive && (
                 <>
-                  <div className='content'>
-                    <p>{`Транскрипция ${word.transcription}`}</p>
-                    <p>{`Перевод - ${word.wordTranslate}`}</p>
-                    <p>{`Применение - ${word.textMeaning}`}</p>
-                    <p>{`Применение перевод - ${word.textMeaningTranslate}`}</p>
-                    <img
-                      className='word-image'
-                      src={`https://eyvgeniy-rslang-be.herokuapp.com/${word.image}`}
-                      height='300px'
-                      width='400px'
-                    />
-                  </div>
+                  <WordData word={word} />
                   <button
                     type='button'
                     className='btn btn-danger'
