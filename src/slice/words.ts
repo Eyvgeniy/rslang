@@ -91,8 +91,9 @@ const wordsSlice = createSlice({
   name: 'words',
   initialState: {
     words: [],
-    allWords: [],
     userWords: [],
+    userWordsLoading: 'idle',
+    allWords: [],
     page: 0,
     group: 0,
     loading: 'idle',
@@ -131,12 +132,12 @@ const wordsSlice = createSlice({
 
     //GET USER WORDS
     builder.addCase(getUserWords.pending, (state) => {
-      state.loading = 'pending';
+      state.userWordsLoading = 'pending';
     });
     builder.addCase(getUserWords.fulfilled, (state, action) => {
       const words = action.payload as UserWordModel[];
       state.userWords = words;
-      state.loading = 'idle';
+      state.userWordsLoading = 'idle';
     });
     builder.addCase(getUserWords.rejected, (state, action) => {
       if (action.payload) {
@@ -147,17 +148,17 @@ const wordsSlice = createSlice({
       } else {
         state.error = action.error.message;
       }
-      state.loading = 'idle';
+      state.userWordsLoading = 'idle';
     });
 
     //CREATE USER WORD
     builder.addCase(createUserWord.pending, (state) => {
-      state.loading = 'pending';
+      state.userWordsLoading = 'pending';
     });
     builder.addCase(createUserWord.fulfilled, (state, action) => {
       const word = action.payload as UserWordModel;
       state.userWords = [...state.userWords, word];
-      state.loading = 'idle';
+      state.userWordsLoading = 'idle';
     });
     builder.addCase(createUserWord.rejected, (state, action) => {
       if (action.payload) {
@@ -168,12 +169,12 @@ const wordsSlice = createSlice({
       } else {
         state.error = action.error.message;
       }
-      state.loading = 'idle';
+      state.userWordsLoading = 'idle';
     });
 
     //UPDATE USER WORD
     builder.addCase(updateUserWord.pending, (state) => {
-      state.loading = 'pending';
+      state.userWordsLoading = 'pending';
     });
     builder.addCase(updateUserWord.fulfilled, (state, action) => {
       const word = action.payload as UserWordModel;
@@ -183,7 +184,7 @@ const wordsSlice = createSlice({
         }
         return item;
       });
-      state.loading = 'idle';
+      state.userWordsLoading = 'idle';
     });
     builder.addCase(updateUserWord.rejected, (state, action) => {
       if (action.payload) {
@@ -194,9 +195,8 @@ const wordsSlice = createSlice({
       } else {
         state.error = action.error.message;
       }
-      state.loading = 'idle';
+      state.userWordsLoading = 'idle';
     });
-
   },
 });
 

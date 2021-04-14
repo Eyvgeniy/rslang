@@ -18,7 +18,11 @@ const App = (): JSX.Element => {
     fetch(routes.getWords(words.page + 1, words.group))
       .then((response) => response.json())
       .then((wordsData) => {
-        const answersForWords = getWrongAnswers(wordsData, words.words, AppData.SavannaNumberOfAnswers);
+        const answersForWords = getWrongAnswers(
+          wordsData,
+          words.words,
+          AppData.SavannaNumberOfAnswers,
+        );
         setWordsForGame(answersForWords);
       });
   }, [words]);

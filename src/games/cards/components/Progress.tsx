@@ -4,11 +4,15 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import './progstyle.css';
 
-const normalise = (value: number) => (value - 0) * 100 / (200 - 0);
+const normalise = (value: number) => (value - 0) * 100 / (100 - 0);
 
 type Progress = {
     props?: object
     value?: number
+}
+
+interface StatProps {
+  setTimeStatistic: (state: boolean) => void
 }
 
 function CircularProgressWithLabel(props: Progress): JSX.Element {
@@ -24,14 +28,17 @@ function CircularProgressWithLabel(props: Progress): JSX.Element {
     );
 }
 
-export default function CircularStatic() {
+export default function CircularStatic(props: StatProps) {
     const [progress, setProgress] = React.useState(0);
+    const {setTimeStatistic} = props;
+
     React.useEffect(() => {
         const timer = setTimeout(() => {
             setProgress((prevProgress) => (prevProgress + 1));
         }, 1000);
-        if (progress === 200) {
+        if (progress === 100) {
             clearInterval(timer);
+            setTimeStatistic(false);
         };
     }, [progress]);
     return <CircularProgressWithLabel value={progress} />;

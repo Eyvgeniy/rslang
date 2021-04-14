@@ -49,7 +49,7 @@ const AudioChallengeGame: FunctionComponent<AudioChallengeGameProps> = ({wordsFo
             setCurrentRound(currentRound + 1);
             playNext();
             setShoudOpen(false);
-        }, 4000);
+        }, 3000);
     }
 
     const handlePlayAgainClick = () => {
@@ -64,6 +64,9 @@ const AudioChallengeGame: FunctionComponent<AudioChallengeGameProps> = ({wordsFo
         <div className={styles.game}>
             {currentGameItem && 
                 <>
+                    <div className={styles.rounds}>
+                        {currentRound + 1}/{wordsForGame.length}
+                    </div>
                     <div className={styles.question}>
                         {((outSidePlaying || isPlaying || isPlayngNext) && !shoudOpen) && 
                             <FontAwesomeIcon className={styles.questionIcon} icon={faVolumeUp}/>

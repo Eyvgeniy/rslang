@@ -1,10 +1,12 @@
 import { AppData } from './AppConstants';
+
 const host = AppData.Host;
 
-const getWords = (page = 0, group = 0): string =>
-  [host, 'words', `?page=${page}&group=${group}`].join('/');
-const getWordById = (id: string): string => [host, 'word', id].join('/');
+const addHost = (src: string): string => [host, src].join('/');
 
+const getWords = (page = 0, group = 0): string =>
+  [host, `words?page=${page}&group=${group}`].join('/');
+const getWordById = (id: string): string => [host, 'word', id].join('/');
 
 const getUserWords = (userId: string): string =>
 [host, 'users', `${userId}`, `words`].join('/');
@@ -23,6 +25,34 @@ const getUserStatistics = (userId: string): string =>
 const upsertUserStatistics = (userId: string): string =>
   [host, 'users', `${userId}`, `statistics`].join('/');
 
+
+const getLearnedWords = (id: string, page = 0, group = 0): string =>
+  [
+    host,
+    `users/${id}/aggregatedWords?page=${page}&group=${group}&wordsPerPage=20&filter={"$or":[{"userWord.difficulty":"normal"},{"userWord.difficulty":"hard"}]}`,
+  ].join('/');
+
+const getHardWords = (id: string, page = 0, group = 0): string =>
+  [
+    host,
+    `users/${id}/aggregatedWords?page=${page}&group=${group}&wordsPerPage=20&filter={"userWord.difficulty":"hard"}`,
+  ].join('/');
+
+const getDeletedWords = (id: string, page = 0, group = 0): string =>
+  [
+    host,
+    `users/${id}/aggregatedWords?page=${page}&group=${group}&wordsPerPage=20&filter={"userWord.difficulty":"easy"}`,
+  ].join('/');
+
+const getUserAggredatedWords = (id: string, page = 0, group = 0): string =>
+  [
+    host,
+    `users/${id}/aggregatedWords?page=${page}&group=${group}&wordsPerPage=20&filter={"userWord":{"$exists": true}}`,
+  ].join('/');
+
+const setWordState = (userId: string, wordId: string): string =>
+  [host, `users/${userId}/words/${wordId}`].join('/');
+
 const signIn = (): string => [host, 'signin'].join('/');
 const createUser = (): string => [host, 'users'].join('/');
 const updateUser = (id: string): string => [host, 'users', id].join('/');
@@ -30,13 +60,20 @@ const deleteUser = (id: string): string => [host, 'users', id].join('/');
 const getUser = (id: string): string => [host, 'users', id].join('/');
 const getNewUserToken = (id: string): string => [host, 'users', id, 'tokens'].join('/');
 
-const getUserPhotoUrl = (fileName: string): string => [host, 'users', `photo?filename=${fileName}`].join('/');
+const getUserPhotoUrl = (fileName: string): string =>
+  [host, 'users', `photo?filename=${fileName}`].join('/');
 
-const  updateStatistics = (id: string): string => [host, 'users', id, 'statistics', ].join('/');
+const updateStatistics = (id: string): string => [host, 'users', id, 'statistics'].join('/');
 
-export default { 
+export default {
+  addHost,
   getWords,
   getWordById,
+  getLearnedWords,
+  getDeletedWords,
+  getHardWords,
+  getUserWords,
+  setWordState,
   createUser,
   updateUser,
   deleteUser,
@@ -45,11 +82,11 @@ export default {
   signIn,
   getUserPhotoUrl, 
   updateStatistics,
-  getUserWords,
+  getUserAggredatedWords,
   createUserWord,
   getUserWord,
   updateUserWord,
   deleteUserWord,
   getUserStatistics,
-  upsertUserStatistics
+  upsertUserStatistics  
 };
