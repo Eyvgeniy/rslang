@@ -1,7 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectPage, fetchWords, fetchAllUserWords } from '../../slice/words';
-import { fetchLearnedWords } from '../../slice/dictionary';
+import { UserWordModel } from '../../models/Word/WordModel';
+import { WordModel } from '../../models/Words/WordModel';
 import wordsApi from '../../api/wordsApi';
 import GroupNav from '../GroupNav';
 import WordsListAuth from '../WordsListAuth';
@@ -16,12 +17,12 @@ const Book = (): JSX.Element => {
     const { currentUser, token } = state.user;
     const { words, userWords } = state.words;
     const deletedWords = userWords
-      .filter((word: any) => word.difficulty === 'easy')
-      .map((word) => word.wordId);
+      .filter((word: UserWordModel) => word.difficulty === 'easy')
+      .map((word: UserWordModel) => word.wordId);
 
-    const existWords = words.filter((word) => !deletedWords.includes(word.id));
-    const wordsWithUserParams = existWords.map((word) => {
-      const userWord = userWords.find((el) => el.wordId === word.id);
+    const existWords = words.filter((word: WordModel) => !deletedWords.includes(word.id));
+    const wordsWithUserParams = existWords.map((word: WordModel) => {
+      const userWord = userWords.find((el: UserWordModel) => el.wordId === word.id);
       if (userWord) return { ...word, userWord };
       return word;
     });
