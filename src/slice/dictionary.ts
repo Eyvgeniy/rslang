@@ -47,8 +47,7 @@ const dictionarySlice = createSlice({
   name: 'dictionary',
   initialState: {
     learnedWords: [],
-    deletedWords: [],
-    hardWords: [],
+
     section: 'learned',
     totalCount: 0,
     page: 0,
@@ -75,7 +74,11 @@ const dictionarySlice = createSlice({
       const [responce] = action.payload as any;
       const { paginatedResults, totalCount } = responce;
       state.learnedWords = paginatedResults;
-      state.totalCount = totalCount.count;
+      if (totalCount[0]) {
+        state.totalCount = totalCount[0].count;
+      } else {
+        state.totalCount = 0;
+      }
       state.loading = 'idle';
     });
     builder.addCase(fetchLearnedWords.rejected, (state, action) => {
