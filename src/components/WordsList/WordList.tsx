@@ -1,12 +1,8 @@
 import React from 'react';
-// import { useSelector, useDispatch } from 'react-redux';
 import Spinner from '../Spinner';
-// import { fetchWords } from '../../slice/words';
 
 const WordsList = ({ words, loading }: { words: any; loading: string }): JSX.Element => {
   const [active, setActive] = React.useState(null);
-  // const { words, page, group, loading } = useSelector((state: any) => state.words);
-  // const dispatch = useDispatch();
 
   const handleWords = (i: number) => () => {
     setActive((prev: number | null): null | number => {
@@ -34,7 +30,7 @@ const WordsList = ({ words, loading }: { words: any; loading: string }): JSX.Ele
                 <div className='content'>
                   <p>{`Транскрипция ${word.transcription}`}</p>
                   <p>{`Перевод - ${word.wordTranslate}`}</p>
-                  <p>{`Применение - ${word.textMeaning}`}</p>
+                  <p dangerouslySetInnerHTML={{ __html: `Применение - ${word.textMeaning}` }}></p>
                   <p>{`Применение перевод - ${word.textMeaningTranslate}`}</p>
                   <img
                     className='word-image'
