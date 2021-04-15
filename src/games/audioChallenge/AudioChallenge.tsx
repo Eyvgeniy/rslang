@@ -27,7 +27,7 @@ const AudioChallenge: FunctionComponent<{}> = () => {
 
     React.useEffect(() => {
         const answersForWords = getWrongAnswers(allWords, words, AppData.AudioChallengeNumberOfAnswers);
-        setWordsForGame(answersForWords);
+        setWordsForGame([answersForWords[0],answersForWords[1],answersForWords[2]]);
         setFirstAudio(AppData.Host + '/' + answersForWords[0]?.correctWord.audio)
     }, [words]);
 

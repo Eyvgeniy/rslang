@@ -81,20 +81,20 @@ const GameStatistics: FunctionComponent<StatisticsProps> = ({mistakesAnswers, co
       gamesCount: 1,
       learnWords: [...correctAnswers.map(x => x.id), ...mistakesAnswers.map(x => x.id)]
     }
+    const model: UserStatisticsModel = {
+      learnedWords: 0,
+      optional:{
+        savanna:[],
+        sprint: [],
+        audioChallenge: [],
+        cards: []
+      }
+    }
     axios.get(routes.getUserStatistics(currentUser.id), {
       headers:{
         'Authorization': `Bearer ${token}`,
       }
     }).then(response => {
-      const model: UserStatisticsModel = {
-        learnedWords: 0,
-        optional:{
-          savanna:[],
-          sprint: [],
-          audioChallenge: [],
-          cards: []
-        }
-      }
       if(response.status === 200){
         const realData = response.data as UserStatisticsRealModel;
         const data: UserStatisticsModel = {
@@ -137,7 +137,20 @@ const GameStatistics: FunctionComponent<StatisticsProps> = ({mistakesAnswers, co
         }
       })
     }).catch(error => {
-      console.log(error);
+      if(error?.response?.status === 404){
+        model.optional[type as string] = [statisticItem]
+        const realModel: UserStatisticsRealModel = {
+          learnedWords: model.learnedWords,
+          optional: {value :JSON.stringify(model.optional)}
+        }
+        axios.put(routes.upsertUserStatistics(currentUser.id), realModel, {
+          headers:{
+            'Authorization': `Bearer ${token}`,
+          }
+        })
+      }else{
+        console.log(error);
+      }
     });
   }, [currentUser]);
 
