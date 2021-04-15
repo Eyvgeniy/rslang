@@ -51,7 +51,7 @@ const Game = (props: GameProps): JSX.Element => {
   const handleShowModal = () => setShowModal(true);
 
   const handleAnswer = (number: number) => (): void => {
-    const currentRightAnswer = words[state.round].rightAnswer;
+    const currentRightAnswer = words[state.round - 1].rightAnswer;
     if (number === currentRightAnswer) {
       setState((currentState) => {
         currentState.uiState = { ...currentState.uiState };
@@ -59,29 +59,27 @@ const Game = (props: GameProps): JSX.Element => {
         currentState.uiState.buttons[number] = { state: 'rightAnswer' };
         return currentState;
       });
-      setCorrectWords((prev) => [...prev, words[state.round].correctWord]);
+      setCorrectWords((prev) => [...prev, words[state.round - 1].correctWord]);
       setCurrentSeries((prev) => prev + 1);
-      if (bestSeries < currentSeries) {
+      if (bestSeries <= currentSeries) {
         setBestSeries(currentSeries);
       }
-      if (state.round === words.length) {
-        setGameState('endGame');
-      } else {
-        setGameState('rightAnswer');
-      }
+      setGameState('rightAnswer');
     } else if (lives === 1) {
       handleShowModal();
       setLives(0);
       setGameState('gameOver');
     } else {
-      setState((currentState) => {
-        currentState.uiState = { ...currentState.uiState };
-        currentState.uiState.buttons = [...currentState.uiState.buttons];
-        currentState.uiState.buttons[currentRightAnswer] = { state: 'rightAnswer' };
-        currentState.uiState.buttons[number] = { state: 'wrongAnswer' };
-        return currentState;
-      });
-      setWrongWords((prev) => [...prev, words[state.round].correctWord]);
+      if (number !== 0) {
+        setState((currentState) => {
+          currentState.uiState = { ...currentState.uiState };
+          currentState.uiState.buttons = [...currentState.uiState.buttons];
+          currentState.uiState.buttons[currentRightAnswer] = { state: 'rightAnswer' };
+          currentState.uiState.buttons[number] = { state: 'wrongAnswer' };
+          return currentState;
+        });
+      }
+      setWrongWords((prev) => [...prev, words[state.round - 1].correctWord]);
       setCurrentSeries(0);
       setGameState('wrongAnswer');
     }
@@ -115,6 +113,10 @@ const Game = (props: GameProps): JSX.Element => {
       setButtonDisabled(true);
       rafTimeout(
         () => {
+          if (state.round === words.length) {
+            setShowStats(true);
+            return;
+          }
           setState((currentState) => {
             currentState.uiState.buttons = [...defaultState.uiState.buttons];
             currentState.round += 1;
@@ -132,6 +134,10 @@ const Game = (props: GameProps): JSX.Element => {
       playError();
       rafTimeout(
         () => {
+          if (state.round === words.length) {
+            setShowStats(true);
+            return;
+          }
           setState((currentState) => {
             currentState.uiState.buttons = [...defaultState.uiState.buttons];
             currentState.round += 1;
@@ -149,7 +155,7 @@ const Game = (props: GameProps): JSX.Element => {
       setButtonDisabled(false);
       rafTimeout(
         () => {
-          setGameState('wrongAnswer');
+          handleAnswer(0);
         },
         5000,
         timeoutRef,
@@ -172,16 +178,16 @@ const Game = (props: GameProps): JSX.Element => {
     };
   }, [gameState, state]);
 
-  const currentRound = words[state.round];
+  const currentRound = words[state.round - 1];
   if (!currentRound) return null;
   return (
-    <div className='safari-game'>
-      <div className='stats'>
-        <div>{hearts(lives)}</div>
+    <div className="safari-game">
+      <div className="stats">
+        {/* <div>{hearts(lives)}</div> */}
         <p>{`Раунд ${state.round}`}</p>
       </div>
       <div className={questionClass}>{currentRound.correctWord.word}</div>
-      <div className='safari-answers'>
+      <div className="safari-answers">
         {currentRound.answers.map((answer, i) => {
           const buttonClass = cn(
             'button-answer',
