@@ -24,7 +24,7 @@ const App = (): JSX.Element => {
   }
 
   return (
-    <section className="main-container-sprint">
+    <section className="main-container-sprint" style={{color: 'black'}}>
       <div className="close-button">
         <a href='#/home'>
         <span className="close-button__text">&times;</span>

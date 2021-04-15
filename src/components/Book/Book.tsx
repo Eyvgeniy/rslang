@@ -40,8 +40,8 @@ const Book = (): JSX.Element => {
         <h3 className='book-title'>Список слов для изучения</h3>
         <WordsList words={words} loading={loading} button={null} />
         <div className='pages'>
-          <button onClick={handleBackPage}>&#129044;</button> <span>{page}</span>{' '}
-          <button onClick={handleForwardPage}>&#129046;</button>
+          <button className='book-btn__left' onClick={handleBackPage}></button> <span>{page}</span>{' '}
+          <button className='book-btn__right' onClick={handleForwardPage}></button>
         </div>
       </div>
       <GamesNav />
