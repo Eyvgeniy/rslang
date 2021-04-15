@@ -204,8 +204,9 @@ body {
 
 /* Style the collapsible content. Note: hidden by default */
 .content {
-  padding: 0 18px;
-
+ display: flex;
+ justify-content: space-evenly;
+  
   overflow: hidden;
   background-color: #f1f1f1;
   -webkit-column-count: 2;
@@ -219,6 +220,13 @@ body {
   column-rule: 1px solid transparent;
 }
 
+.content-icon {
+  transition: all 0.5s;
+}
+.content-icon:hover {
+  transform: scale(1.1);
+}
+
 .pages {
   width: 15%;
   margin: 15px auto;
@@ -230,6 +238,7 @@ body {
 
 .word-image {
   background: url('../../public/assets/1487.gif') no-repeat scroll center center;
+  border-radius: 15px;
 }
 
 h1 {
