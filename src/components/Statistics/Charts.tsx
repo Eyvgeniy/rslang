@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import { Line } from 'react-chartjs-2';
 import { optional } from "./statisticsinfo";
 
-const dataGames = Object.entries(optional);
-console.log(dataGames[0][1].lernWords);
+interface StatisticsProps {
+  dataStatistics: any,
+  wordsAllDay: number,
+  arrayWords: string[]
+}
 
-const genData = () => ({
-  labels: dataGames[0][1].dateTime,
+
+const genData = (wordsAllDay: number, arrayWords: string[]) => ({
+  labels: arrayWords,
   datasets: [
     {
       type: "line",
@@ -15,13 +19,13 @@ const genData = () => ({
       borderColor: "rgba(39, 74, 172, 1)",
       borderWidth: 2,
       fill: true,
-      data: dataGames[0][1].lernWords,
+      data: [wordsAllDay],
     },
   ],
 });
 
-const genDataAll = () => ({
-  labels: dataGames[0][1].dateTime,
+const genDataAll = (wordsAllDay: number, arrayWords: string[]) => ({
+  labels: arrayWords,
   datasets: [
     {
       type: "line",
@@ -30,7 +34,7 @@ const genDataAll = () => ({
       borderColor: "rgba(39, 74, 172, 1)",
       borderWidth: 2,
       fill: true,
-      data: dataGames[0][1].lernWords,
+      data: [wordsAllDay],
     },
   ],
 });
@@ -52,11 +56,12 @@ const options = {
   },
 };
 
-const data = genData();
-const dataAll = genDataAll();
+const Charts = (props: StatisticsProps) => {
+const {dataStatistics, wordsAllDay, arrayWords} = props
 
+const data = genData(wordsAllDay, arrayWords);
+const dataAll = genDataAll(wordsAllDay, arrayWords);
 
-const Charts = () => {
   return (
     <div>
       <div style={{display: 'flex', justifyContent: 'space-around'}} >

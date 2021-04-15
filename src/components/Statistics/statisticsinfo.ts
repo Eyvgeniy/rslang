@@ -1,52 +1,52 @@
 
-  const optional =  {
- data:
+const optional = {
+  savanna: [
     {
-     type: "Саванна",
-     dateTime: ['01.04.2021'],
-     lernWords: [50],
-     answerCorrect: 10,
-     percentage: '50%',
-     seriesLength: 6,
-     gamesCount: 1,
+      answerCorrect: 0,
+      dateTime: "",
+      gamesCount: 0,
+      learnWords: [''],
+      percentage: 0,
+      seriesLength: 0,
+      type: "savanna"
     },
-   data2:
-    {
-    type: "Карточки",
-     dateTime: '01.04.2021',
-     lernWords: 18,
-     answerCorrect: 10,
-     percentage: '10%',
-     seriesLength: 6,
-     gamesCount: 1,
-    }
-  ,
+  ],
 
-   data3:
+  sprint: [
     {
-    type: "Аудиовызов",
-     dateTime: '01.04.2021',
-     lernWords: 12,
-     answerCorrect: 10,
-     percentage: '10%',
-     seriesLength: 6,
-     gamesCount: 1,
-    }
-   ,
+      answerCorrect: 0,
+      dateTime: "",
+      gamesCount: 0,
+      learnWords: [''],
+      percentage: 0,
+      seriesLength: 0,
+      type: "savanna"
+    },
+  ],
 
-   data4:
+  audioChallenge: [
     {
-    type: "Спринт",
-     dateTime: '01.04.2021',
-     answerCorrect: 10,
-     lernWords: 10,
-     percentage: '10%',
-     seriesLength: 6,
-     gamesCount: 1,
-    }
-    }
- 
+      answerCorrect: 0,
+      dateTime: "",
+      gamesCount: 0,
+      learnWords: [''],
+      percentage: 0,
+      seriesLength: 0,
+      type: "savanna"
+    },
+  ],
 
-export {
-  optional
+  cards: [
+    {
+      answerCorrect: 0,
+      dateTime: "",
+      gamesCount: 0,
+      learnWords: [''],
+      percentage: 0,
+      seriesLength: 0,
+      type: "savanna"
+    },
+  ],
 };
+
+export { optional };

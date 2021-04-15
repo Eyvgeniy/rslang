@@ -110,19 +110,7 @@ const CardGame = (props: GameProps): JSX.Element => {
     setSeriesLength(Math.max.apply(null, arraySeriesLength))
 }
 
-  const sendData = useCallback(() => {
-    fetch(routes.updateStatistics("6072a1121f132e00156b2f11"), {
-      method: "PUT",
-      body: JSON.stringify({
-        learnedWords: 20,
-        optional: {},
-      }),
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        console.log("Result PUT, ", result);
-      });
-  }, []);
+  
 
   return (
     <div className="app">
