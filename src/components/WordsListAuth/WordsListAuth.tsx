@@ -59,14 +59,14 @@ const WordsList = ({
                   <WordData word={word} />
                   <button
                     type='button'
-                    className='btn btn-danger'
+                    className='btn btn-outline-success'
                     onClick={handleMethod(word.id, deleteMethod)}
                   >
                     Удалить из учебника
                   </button>
                   <button
                     type='button'
-                    className='btn btn-primary'
+                    className='btn btn-outline-danger'
                     onClick={handleMethod(word.id, hardMethod, word.userWord)}
                   >
                     Добавить в сложные
