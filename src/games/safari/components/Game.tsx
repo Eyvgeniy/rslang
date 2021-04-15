@@ -6,8 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import EndGameModal from './EndGameModal';
+import GameStatistics from '../../components/Statistics/Statistics';
 import rafTimeout from '../rafTimeout';
 import { GameItem } from '../../../getWrongAnswers';
+import { WordModel } from '../../../models/Words/WordModel';
+import { GameType } from '../../../AppConstants';
 
 interface GameProps {
   gameState: string;
@@ -35,6 +38,11 @@ const Game = (props: GameProps): JSX.Element => {
   const [playCorrect] = useSound('../../../public/assets/correct.mp3');
   const [playError] = useSound('../../../public/assets/error.mp3');
   const [showModal, setShowModal] = React.useState(false);
+  const [correctWords, setCorrectWords] = React.useState([] as WordModel[]);
+  const [wrongWords, setWrongWords] = React.useState([] as WordModel[]);
+  const [currentSeries, setCurrentSeries] = React.useState(0);
+  const [bestSeries, setBestSeries] = React.useState(0);
+  const [showStats, setShowStats] = React.useState(false);
 
   const handleCloseModal = () => {
     setShowModal(false);
@@ -51,7 +59,16 @@ const Game = (props: GameProps): JSX.Element => {
         currentState.uiState.buttons[number] = { state: 'rightAnswer' };
         return currentState;
       });
-      setGameState('rightAnswer');
+      setCorrectWords((prev) => [...prev, words[state.round].correctWord]);
+      setCurrentSeries((prev) => prev + 1);
+      if (bestSeries < currentSeries) {
+        setBestSeries(currentSeries);
+      }
+      if (state.round === words.length) {
+        setGameState('endGame');
+      } else {
+        setGameState('rightAnswer');
+      }
     } else if (lives === 1) {
       handleShowModal();
       setLives(0);
@@ -64,6 +81,8 @@ const Game = (props: GameProps): JSX.Element => {
         currentState.uiState.buttons[number] = { state: 'wrongAnswer' };
         return currentState;
       });
+      setWrongWords((prev) => [...prev, words[state.round].correctWord]);
+      setCurrentSeries(0);
       setGameState('wrongAnswer');
     }
   };
@@ -139,7 +158,11 @@ const Game = (props: GameProps): JSX.Element => {
 
     if (gameState === 'gameOver') {
       setPosition(() => 100);
-      console.log('gameOver');
+    }
+
+    if (gameState === 'endGame') {
+      setPosition(() => 100);
+      setShowStats(true);
     }
     document.addEventListener('keyup', handleKeyPress);
 
@@ -180,6 +203,14 @@ const Game = (props: GameProps): JSX.Element => {
         })}
       </div>
       <EndGameModal show={showModal} closeModal={handleCloseModal} />
+      {showStats && (
+        <GameStatistics
+          correctAnswers={correctWords}
+          mistakesAnswers={wrongWords}
+          bestSeriesLength={bestSeries}
+          type={GameType.Savanna}
+        />
+      )}
     </div>
   );
 };
