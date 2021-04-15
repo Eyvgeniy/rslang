@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import Spinner from '../Spinner';
 import WordData from '../WordData';
 
@@ -12,6 +13,7 @@ const WordsList = ({
   button: any;
 }): JSX.Element => {
   const [active, setActive] = React.useState(null);
+  const user = useSelector((state) => state.user.currentUser);
 
   const handleWords = (i: number) => () => {
     setActive((prev: number | null): null | number => {
@@ -37,7 +39,8 @@ const WordsList = ({
               return (
                 <React.Fragment key={i}>
                   <li className={`collapsible ${liClass}`} onClick={handleWords(i)}>
-                    {word.word} {word.userWord.difficulty === 'hard' && '__сложное слово__'}
+                    {word.word}
+                    {user && word.userWord.difficulty === 'hard' && '__сложное слово__'}
                   </li>
                   {isActive && (
                     <>
