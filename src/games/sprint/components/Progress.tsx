@@ -9,6 +9,9 @@ type Progress = {
   props?: object
   value?: number
 }
+interface StatProps {
+  setTimeStatistic: (state: boolean) => void
+}
 
 function CircularProgressWithLabel(props: Progress): JSX.Element {
   return (
@@ -23,7 +26,8 @@ function CircularProgressWithLabel(props: Progress): JSX.Element {
   );
 }
 
-export default function CircularStatic() {
+export default function CircularStatic(props: StatProps) {
+  const {setTimeStatistic} = props;
   const [progress, setProgress] = React.useState(60);
 
   React.useEffect(() => {
@@ -33,6 +37,7 @@ export default function CircularStatic() {
 
     if(progress === 0){
       clearInterval(timer);
+      setTimeStatistic(false);
     };
   }, [progress]);
   return <CircularProgressWithLabel value={progress} />;

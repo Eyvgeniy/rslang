@@ -20,7 +20,7 @@ const WordData = ({ word }: { word: WordModel }): JSX.Element => {
       <p dangerouslySetInnerHTML={{ __html: `Применение - ${word.textExample}` }}></p>
       <FontAwesomeIcon icon={faVolumeUp} onClick={() => playExample()} />
       <p>{`Применение перевод - ${word.textExampleTranslate}`}</p>
-      <img className='word-image' src={routes.addHost(word.image)} height='400px' width='500px' />
+      <img className='word-image' src={routes.addHost(word.image)} height='350px' width='450px' />
     </div>
   );
 };

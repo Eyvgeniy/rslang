@@ -6,8 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import EndGameModal from './EndGameModal';
+import GameStatistics from '../../components/Statistics/Statistics';
 import rafTimeout from '../rafTimeout';
 import { GameItem } from '../../../getWrongAnswers';
+import { WordModel } from '../../../models/Words/WordModel';
+import { GameType } from '../../../AppConstants';
 
 interface GameProps {
   gameState: string;
@@ -35,6 +38,11 @@ const Game = (props: GameProps): JSX.Element => {
   const [playCorrect] = useSound('../../../public/assets/correct.mp3');
   const [playError] = useSound('../../../public/assets/error.mp3');
   const [showModal, setShowModal] = React.useState(false);
+  const [correctWords, setCorrectWords] = React.useState([] as WordModel[]);
+  const [wrongWords, setWrongWords] = React.useState([] as WordModel[]);
+  const [currentSeries, setCurrentSeries] = React.useState(0);
+  const [bestSeries, setBestSeries] = React.useState(0);
+  const [showStats, setShowStats] = React.useState(false);
 
   const handleCloseModal = () => {
     setShowModal(false);
@@ -43,7 +51,7 @@ const Game = (props: GameProps): JSX.Element => {
   const handleShowModal = () => setShowModal(true);
 
   const handleAnswer = (number: number) => (): void => {
-    const currentRightAnswer = words[state.round].rightAnswer;
+    const currentRightAnswer = words[state.round - 1].rightAnswer;
     if (number === currentRightAnswer) {
       setState((currentState) => {
         currentState.uiState = { ...currentState.uiState };
@@ -51,19 +59,28 @@ const Game = (props: GameProps): JSX.Element => {
         currentState.uiState.buttons[number] = { state: 'rightAnswer' };
         return currentState;
       });
+      setCorrectWords((prev) => [...prev, words[state.round - 1].correctWord]);
+      setCurrentSeries((prev) => prev + 1);
+      if (bestSeries <= currentSeries) {
+        setBestSeries(currentSeries);
+      }
       setGameState('rightAnswer');
     } else if (lives === 1) {
       handleShowModal();
       setLives(0);
       setGameState('gameOver');
     } else {
-      setState((currentState) => {
-        currentState.uiState = { ...currentState.uiState };
-        currentState.uiState.buttons = [...currentState.uiState.buttons];
-        currentState.uiState.buttons[currentRightAnswer] = { state: 'rightAnswer' };
-        currentState.uiState.buttons[number] = { state: 'wrongAnswer' };
-        return currentState;
-      });
+      if (number !== 0) {
+        setState((currentState) => {
+          currentState.uiState = { ...currentState.uiState };
+          currentState.uiState.buttons = [...currentState.uiState.buttons];
+          currentState.uiState.buttons[currentRightAnswer] = { state: 'rightAnswer' };
+          currentState.uiState.buttons[number] = { state: 'wrongAnswer' };
+          return currentState;
+        });
+      }
+      setWrongWords((prev) => [...prev, words[state.round - 1].correctWord]);
+      setCurrentSeries(0);
       setGameState('wrongAnswer');
     }
   };
@@ -96,6 +113,10 @@ const Game = (props: GameProps): JSX.Element => {
       setButtonDisabled(true);
       rafTimeout(
         () => {
+          if (state.round === words.length) {
+            setShowStats(true);
+            return;
+          }
           setState((currentState) => {
             currentState.uiState.buttons = [...defaultState.uiState.buttons];
             currentState.round += 1;
@@ -113,6 +134,10 @@ const Game = (props: GameProps): JSX.Element => {
       playError();
       rafTimeout(
         () => {
+          if (state.round === words.length) {
+            setShowStats(true);
+            return;
+          }
           setState((currentState) => {
             currentState.uiState.buttons = [...defaultState.uiState.buttons];
             currentState.round += 1;
@@ -130,7 +155,7 @@ const Game = (props: GameProps): JSX.Element => {
       setButtonDisabled(false);
       rafTimeout(
         () => {
-          setGameState('wrongAnswer');
+          handleAnswer(0);
         },
         5000,
         timeoutRef,
@@ -139,7 +164,11 @@ const Game = (props: GameProps): JSX.Element => {
 
     if (gameState === 'gameOver') {
       setPosition(() => 100);
-      console.log('gameOver');
+    }
+
+    if (gameState === 'endGame') {
+      setPosition(() => 100);
+      setShowStats(true);
     }
     document.addEventListener('keyup', handleKeyPress);
 
@@ -149,16 +178,16 @@ const Game = (props: GameProps): JSX.Element => {
     };
   }, [gameState, state]);
 
-  const currentRound = words[state.round];
+  const currentRound = words[state.round - 1];
   if (!currentRound) return null;
   return (
-    <div className='safari-game'>
-      <div className='stats'>
-        <div>{hearts(lives)}</div>
+    <div className="safari-game">
+      <div className="stats">
+        {/* <div>{hearts(lives)}</div> */}
         <p>{`Раунд ${state.round}`}</p>
       </div>
       <div className={questionClass}>{currentRound.correctWord.word}</div>
-      <div className='safari-answers'>
+      <div className="safari-answers">
         {currentRound.answers.map((answer, i) => {
           const buttonClass = cn(
             'button-answer',
@@ -180,6 +209,14 @@ const Game = (props: GameProps): JSX.Element => {
         })}
       </div>
       <EndGameModal show={showModal} closeModal={handleCloseModal} />
+      {showStats && (
+        <GameStatistics
+          correctAnswers={correctWords}
+          mistakesAnswers={wrongWords}
+          bestSeriesLength={bestSeries}
+          type={GameType.Savanna}
+        />
+      )}
     </div>
   );
 };

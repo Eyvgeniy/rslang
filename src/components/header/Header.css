@@ -18,4 +18,6 @@
     background-position-y: 100%;
     background-size: 150% auto;
   }
-  
+  .navbar-light .navbar-brand {
+    color: #8708f5;
+  }

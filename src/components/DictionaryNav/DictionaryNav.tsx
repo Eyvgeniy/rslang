@@ -21,7 +21,7 @@ const DictionaryNav = (): JSX.Element => {
       {sections.map((section, i) => {
         // const activeClass = i === group ? `link${i + 1}-active` : '';
         return (
-          <button key={i} onClick={handleChangeSection(section.id)}>
+          <button key={i} className='btn btn-outline-secondary' onClick={handleChangeSection(section.id)}>
             {' '}
             {section.name}
           </button>

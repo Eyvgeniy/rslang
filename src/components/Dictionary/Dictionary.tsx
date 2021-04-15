@@ -67,9 +67,9 @@ const Dictionary = (): JSX.Element => {
         <h3 className='book-title'>Список слов для изучения</h3>
         <WordsList words={words} loading={loading} button={button} />
         <div className='pages'>
-          {isPrevious && <button onClick={handleBackPage}>&#129044;</button>}
+          {isPrevious && <button className='book-btn__left' onClick={handleBackPage}></button>}
           <span>{page}</span>
-          {isNextPage && <button onClick={handleForwardPage}>&#129046;</button>}
+          {isNextPage && <button className='book-btn__right' onClick={handleForwardPage}></button>}
         </div>
       </div>
       <GamesNav />
