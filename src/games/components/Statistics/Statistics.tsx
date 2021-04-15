@@ -72,7 +72,7 @@ const GameStatistics: FunctionComponent<StatisticsProps> = ({mistakesAnswers, co
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = today.getFullYear();
-    const statisticItem: UserStatisticsOptionalModel = {
+     const statisticItem: UserStatisticsOptionalModel = {
       type: type as string,
       seriesLength: bestSeriesLength,
       answerCorrect: correctAnswers.length,
@@ -196,3 +196,4 @@ const GameStatistics: FunctionComponent<StatisticsProps> = ({mistakesAnswers, co
 
 }
 export default GameStatistics;
+

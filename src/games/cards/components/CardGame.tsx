@@ -5,21 +5,22 @@ import useSound from "use-sound";
 import Progress from "./Progress";
 import "./style.css";
 import routes from "../../../routes";
-import StatisticsGame from './StatisticsGame'
+import { GameType } from './../../../AppConstants';
+import { WordModel } from "../../../models/Words/WordModel";
+import GameStatistics from '../../components/Statistics/Statistics'
 
 interface GameProps {
   gameState: string;
   setGameState: (state: string) => void;
-  words: Array<{ word: string; id: string; image: string; audio: string; wordTranslate: string }>;
+  words: Array<WordModel>;
 }
 
 const CardGame = (props: GameProps): JSX.Element => {
-  // const { id } = useSelector((state: any) => state.user.currentUser.id);
-
+  
   const { words } = props;
   const [data, setData] = useState([]);
-  const [correctWords, setCorrectWords] = useState([]);
-  const [incorrectWords, setIncorrectWords] = useState([]);
+  const [answerCorrect, setAnswerCorrect] = useState([]);
+  const [answerMistake, setAnswerMistake] = useState([]);
   const [sounds, setSounds] = useState([
     {},
     {
@@ -42,7 +43,6 @@ const CardGame = (props: GameProps): JSX.Element => {
   const [arraySeriesLength, setArraySeriesLength] = useState([])
   const [timeStatistic, setTimeStatistic] = useState(true);
   
-
   useEffect(() => {
     fetch("http://eyvgeniy-rslang-be.herokuapp.com/words?group=0&page=0")
       .then((res) => res.json())
@@ -97,10 +97,10 @@ const CardGame = (props: GameProps): JSX.Element => {
   }
 
   function checkArrayWords(e: any) {
-    if (e.target.dataset.id === sounds[0].id && !(incorrectWords.find(item => item.word === sounds[0].word))) {
-      setCorrectWords([...correctWords, sounds[0]]);
-    } else if (e.target.dataset.id !== sounds[0].id && !(incorrectWords.find(item => item.word === sounds[0].word))) {
-      setIncorrectWords([...incorrectWords, sounds[0]])
+    if (e.target.dataset.id === sounds[0].id && !(answerMistake.find(item => item.word === sounds[0].word))) {
+      setAnswerCorrect([...answerCorrect, sounds[0]]);
+    } else if (e.target.dataset.id !== sounds[0].id && !(answerMistake.find(item => item.word === sounds[0].word))) {
+      setAnswerMistake([...answerMistake, sounds[0]])
     } else return
   }
 
@@ -167,7 +167,7 @@ const CardGame = (props: GameProps): JSX.Element => {
           Start game
         </button>
       </div> 
-      ) : <StatisticsGame correctWords={correctWords} incorrectWords={incorrectWords} seriesLength={seriesLength} />}
+      ) : <GameStatistics mistakesAnswers={answerMistake} correctAnswers={answerCorrect} bestSeriesLength ={seriesLength} type={GameType.Cards}/>}
     </div>
   );
 };

@@ -4,10 +4,11 @@ import CardGame from "./components/CardGame";
 import "./App.css";
 import routes from "../../routes";
 import Start from "../components/Start/Start";
+import { WordModel } from "../../models/Words/WordModel";
 
 const App = (): JSX.Element => {
   const [gameState, setGameState] = React.useState("start");
-  const [wordsForGame, setWordsForGame] = React.useState([]);
+  const [wordsForGame, setWordsForGame] = React.useState([]as WordModel[]);
 
   const words = useSelector((state: any) => state.words);
   React.useEffect(() => {
