@@ -1,12 +1,19 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Spinner from '../Spinner';
-import { fetchWords } from '../../slice/words';
+import WordData from '../WordData';
 
-const WordsList = (): JSX.Element => {
+const WordsList = ({
+  words,
+  loading,
+  button,
+}: {
+  words: any;
+  loading: string;
+  button: any;
+}): JSX.Element => {
   const [active, setActive] = React.useState(null);
-  const { words, page, group, loading } = useSelector((state: any) => state.words);
-  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.currentUser);
 
   const handleWords = (i: number) => () => {
     setActive((prev: number | null): null | number => {
@@ -16,42 +23,44 @@ const WordsList = (): JSX.Element => {
   };
 
   React.useEffect(() => {
-    dispatch(fetchWords({ group, page }));
     setActive(null);
-  }, [group, page]);
+  }, []);
 
   return (
-    <ul className="words-list">
-      {loading === 'idle' ? (
-        words.map((word: any, i: number) => {
-          const isActive = i === active;
-          const liClass = isActive ? 'active' : '';
-          return (
-            <React.Fragment key={i}>
-              <li className={`collapsible ${liClass}`} onClick={handleWords(i)}>
-                {word.word}
-              </li>
-              {isActive && (
-                <div className="content">
-                  <p>{`Транскрипция ${word.transcription}`}</p>
-                  <p>{`Перевод - ${word.wordTranslate}`}</p>
-                  <p>{`Применение - ${word.textMeaning}`}</p>
-                  <p>{`Применение перевод - ${word.textMeaningTranslate}`}</p>
-                  <img
-                    className="word-image"
-                    src={`https://eyvgeniy-rslang-be.herokuapp.com/${word.image}`}
-                    height="300px"
-                    width="400px"
-                  />
-                </div>
-              )}
-            </React.Fragment>
-          );
-        })
+    <>
+      {words.length === 0 ? (
+        'Нет слов'
       ) : (
-        <Spinner />
+        <ul className='words-list'>
+          {loading === 'idle' ? (
+            words.map((word: any, i: number) => {
+              const isActive = i === active;
+              const liClass = isActive ? 'activeWord' : '';
+              return (
+                <React.Fragment key={i}>
+                  <li className={`collapsible ${liClass}`} onClick={handleWords(i)}>
+                    {word.word}
+                    {user && word.userWord.difficulty === 'hard' && '__сложное слово__'}
+                  </li>
+                  {isActive && (
+                    <>
+                      <WordData word={word} />
+                      {button && (
+                        <button className={button.class} onClick={button.handler(word._id)}>
+                          {button.name}
+                        </button>
+                      )}
+                    </>
+                  )}
+                </React.Fragment>
+              );
+            })
+          ) : (
+            <Spinner />
+          )}
+        </ul>
       )}
-    </ul>
+    </>
   );
 };
 

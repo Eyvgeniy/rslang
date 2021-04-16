@@ -1,21 +1,54 @@
+import { WordModel } from './models/Words/WordModel';
+
 export const getRandomInt = (min: number, max: number): number =>
   Math.floor(Math.random() * (max - min)) + min;
+  
+export interface GameItem{
+  answers: WordModel[];
+  rightAnswer: number;
+  correctWord: WordModel;
+};
 
-const NUMBER_OF_ANSWERS = 4;
-const result = [] as any;
+const getRandomWordExceptRight = (list: WordModel[], word: WordModel) => {
+  if(!list || list.length <= 1){
+    throw "Words list is empty";
+  }
+  let successResult = false;
+  let newWord: WordModel;
+  while(!successResult){
+    newWord = list[getRandomInt(0, list.length)];
+    if(newWord.id !== word.id){
+      successResult = true;
+    }
+  }
+  return newWord;
+}
 
-const getWrongAnswers = (list: Array<any>, questions: any): Array<Array<any>> => {
-  for (let i = 0; i < list.length; i += 1) {
-    const arr = [] as Array<string>;
-    const randomPostionForAnswer = getRandomInt(0, NUMBER_OF_ANSWERS);
-    for (let j = 0; j < NUMBER_OF_ANSWERS; j += 1) {
+function shuffleArray<T> (a: T[]): T[] {
+  const result = a.slice();
+  for (let i = result.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
+const getWrongAnswers = (list: WordModel[], questions: WordModel[], numberOfAnswers: number): GameItem[] => {  
+  const result: GameItem[] = [];
+  const shuffledArray = shuffleArray(questions);
+  for (let i = 0; i < shuffledArray.length; i += 1) {
+    const arr: Array<WordModel> = [];
+    const randomPostionForAnswer = getRandomInt(0, numberOfAnswers);
+    const correctAnswer = shuffledArray[i];
+    for (let j = 0; j < numberOfAnswers; j += 1) {
       if (randomPostionForAnswer === j) {
-        arr.push(questions[i].wordTranslate);
+        arr.push(correctAnswer);
       } else {
-        arr.push(list[getRandomInt(0, list.length)].wordTranslate);
+        const word = getRandomWordExceptRight(list, correctAnswer);
+        arr.push(word);
       }
     }
-    result.push({ answers: arr, rightAnswer: randomPostionForAnswer });
+    result.push({ answers: arr, rightAnswer: randomPostionForAnswer, correctWord: correctAnswer });
   }
   return result;
 };

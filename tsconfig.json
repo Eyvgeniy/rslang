@@ -7,7 +7,10 @@
     "jsx": "react",
     "noImplicitAny": true,
     "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
+    "sourceMap": true,"allowJs": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames":true,      
+    "resolveJsonModule": true,
     "moduleResolution": "node"
   }
 }

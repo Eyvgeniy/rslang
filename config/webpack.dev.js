@@ -10,5 +10,7 @@ module.exports = merge(common, {
     contentBase: path.resolve(__dirname, '..'),
     hot: true,
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ],
 });

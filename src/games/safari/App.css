@@ -115,6 +115,13 @@
   background-color: red;
 }
 
+.stats {
+  position: relative;
+  top: -27%;
+  right: -40%;
+  font-size: 18px;
+}
+
 @keyframes question-fall {
   from {
     transform: translate(0, -40vh);

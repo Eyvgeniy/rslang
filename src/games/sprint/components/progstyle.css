@@ -1,0 +1,16 @@
+.text-container  {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+};
+.Astr {
+    font-size: 1.5rem;
+}
+.progress-container {
+    width: 60px;
+}

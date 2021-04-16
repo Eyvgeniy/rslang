@@ -1,0 +1,260 @@
+.App {
+background-image: url(../assets/back.jpg);
+background-size: contain;
+height: 100vh;
+}
+.sprint-container {
+  padding-top: 55px;
+  margin: 0 auto;
+  width: 28%;
+  text-align: center;
+}
+.score-count{
+  font-size: 2.2rem;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 500;
+  color: green;
+}
+.sprint-card{
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+.sprint-card__header {
+height: 80px;
+border-left: solid white 3px;
+border-right: solid white 3px;
+border-top: solid white 3px;
+border-top-right-radius: 10px;
+border-top-left-radius: 10px;
+transition: all 0.5s;
+}
+.sprint-card__header.right{
+  border-left: solid green 3px;
+  border-right: solid green 3px;
+  border-top: solid green 3px;
+}
+.sprint-card__header.wrong{
+  border-left: solid red 3px;
+  border-right: solid red 3px;
+  border-top: solid red 3px;
+}
+.sprint-card__header-yellow{
+  height: 80px;
+  border-top-right-radius: 10px;
+border-top-left-radius: 10px;
+  border: 3px solid yellow;
+  background-color: yellow;
+}
+.sprint-card__header-coral{
+  height: 80px;
+  border-top-right-radius: 10px;
+border-top-left-radius: 10px;
+  border: 3px solid coral;
+  background-color: coral;
+}
+.sprint-card__header-purple{
+  height: 80px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  border: 3px solid purple;
+  background-color: purple;
+}
+.sprint-card__word {
+height: 200px;
+display: flex;
+justify-content: center;
+flex-direction: column;
+align-items: center;
+border-left: solid white 3px;
+border-right: solid white 3px;
+transition: all 0.5s;
+}
+.sprint-card__word>p {
+  margin: 10px auto;
+  font-size: 1.3rem;
+  color: black;
+}
+.sprint-card__word.right {
+  border-left: solid green 3px;
+  border-right: solid green 3px;
+}
+.sprint-card__word.wrong {
+  border-left: solid red 3px;
+  border-right: solid red 3px;
+}
+.sprint-card__buttons {
+padding-top: 40px;
+padding-bottom: 20px;
+border-left: solid white 3px;
+border-right: solid white 3px;
+border-bottom: solid white 3px;
+border-bottom-right-radius: 10px;
+border-bottom-left-radius: 10px;
+transition: all 0.5s;
+  display: flex;
+  justify-content: space-evenly;
+}
+.sprint-card__buttons.right{
+border-left: solid green 3px;
+border-right: solid green 3px;
+border-bottom: solid green 3px;
+}
+.sprint-card__buttons.wrong{
+  border-left: solid red 3px;
+  border-right: solid red 3px;
+  border-bottom: solid red 3px;
+}
+.btn{
+  width: 130px;
+}
+.sprint-card__btn-left{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.sprint-card__btn-right{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.icon-arrowleft, .icon-arrowright{
+margin-top: 5px;
+width: 25px;
+height: 25px;
+background-image: url(../assets/arrowleft.jpg);
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+}
+.icon-arrowleft{
+background-image: url(../assets/arrowleft.jpg);
+}
+.icon-arrowright{
+  background-image: url(../assets/arrowright.jpg);
+}
+
+.header-icons {
+  width: 18%;
+  display: flex;
+  justify-content: space-between;
+  margin: 10px auto;
+}
+.header__icon{
+  width: 20px;
+  height: 20px;
+  border-radius: 50px;
+  background-color: rgba(196, 196, 196, 0.37);
+}
+.header__icon.active {
+  background-color: white;
+  background-image: url(../assets/icon.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.header__text{
+  color: white;
+  font-size: 1.3rem;
+}
+.header__text-one{
+  color: black;
+  font-size: 1.3rem;
+}
+.none {
+  display: none;
+}
+.header-icon-active {
+  width: 23%;
+  display: flex;
+  justify-content: center;
+  margin: 10px auto;
+}
+.header-description>p{
+  margin: 0;
+}
+.sprint-card__icon{
+  width: 90%;
+  height: 15px;
+  border-bottom: dotted 1px grey;
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+}
+.sprint-card__icon-right{
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  border-radius: 50px;
+  background-color: white;
+  background-image: url(../assets/right.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: all 0.5s;
+}
+.sprint-card__icon-right.transparent{
+  opacity: 0;
+}
+
+.sprint-card__icon-wrong{
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+  background-color: white;
+  background-image: url(../assets/wrong.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: all 0.5s
+}
+.sprint-card__icon-wrong.transparent{
+  opacity: 0;
+}
+.sprint-timer{
+  position: absolute;
+  top: 25%;
+  right: 30%;
+}
+.sprint-card__level{
+  display: flex;
+  width: 28%;
+  align-items: center;
+  margin: 30px auto;
+  border-bottom: solid rgba(0, 0, 0, 0.096) 2px;
+}
+.sprint-card__level-one, .sprint-card__level-two, .sprint-card__level-three, .sprint-card__level-four.transparent{
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: all 0.5s
+}
+.sprint-card__level-two.transparent{
+  opacity: 1;
+}
+.sprint-card__level-three.transparent{
+  opacity: 1;
+}
+.sprint-card__level-four.transparent{
+  opacity: 1;
+}
+
+.sprint-card__level-one{
+  background-image: url(../assets/starred.png);
+}
+.sprint-card__level-two{
+  background-image: url(../assets/starblue.png);
+  opacity: 0;
+}
+.sprint-card__level-three{
+  background-image: url(../assets/startpurple.png);
+  opacity: 0;
+}
+.sprint-card__level-four{
+  background-image: url(../assets/staryellow.png);
+  opacity: 0;
+}

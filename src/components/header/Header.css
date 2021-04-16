@@ -1,17 +1,23 @@
-.navbar-light .navbar-brand {
-    color: #8708F5;
-    font-weight: 600;
-}
-.nav-link{
-    font-size: 1.1rem;
-}
-.nav-link:hover{
-    color: #8708F5;
-}
-.btn-outline-secondary{
-    color: #8708F5;
-    border-color: #8708F5;
-}
-.btn:hover{
-    background-color: #8708F5;
-}
+.games-nav {
+    display: flex;
+  }
+  
+  .game-card {
+    height: 200px;
+    width: 300px;
+    margin: 20px 10px;
+  }
+  
+  .game-block {
+    height: 100%;
+    width: 100%;
+    color: white;
+    text-align: center;
+    vertical-align: center;
+    background-position-x: center;
+    background-position-y: 100%;
+    background-size: 150% auto;
+  }
+  .navbar-light .navbar-brand {
+    color: #8708f5;
+  }

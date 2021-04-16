@@ -1,17 +1,25 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectPage } from '../../slice/words';
+import { selectPage, fetchWords } from '../../slice/words';
+import wordsApi from '../../api/wordsApi';
 import GroupNav from '../GroupNav';
 import WordsList from '../WordsList';
 import GamesNav from '../GamesNav';
+import BookNav from '../BookNav';
+
+const FIRST_PAGE = 0;
+const LAST_PAGE = 29;
 
 const Book = (): JSX.Element => {
-  const { group, page } = useSelector((state: any) => state.words);
+  const { group, page, loading, words, user } = useSelector((state: any) => {
+    const { currentUser, token } = state.user;
+    return { ...state.words, user: { token, ...currentUser } };
+  });
   const dispatch = useDispatch();
 
   const handleBackPage = () => {
-    if (page === 0) {
-      dispatch(selectPage(29));
+    if (page === FIRST_PAGE) {
+      dispatch(selectPage(LAST_PAGE));
     } else {
       dispatch(selectPage(page - 1));
     }
@@ -21,15 +29,19 @@ const Book = (): JSX.Element => {
     dispatch(selectPage((page + 1) % 29));
   };
 
+  React.useEffect(() => {
+    dispatch(fetchWords({ group, page }));
+  }, [group, page]);
+
   return (
-    <div className="words-container">
+    <div className='words-container'>
       <GroupNav />
       <div className={`book book-group${group}`}>
-        <h3 className="book-title">Список слов для изучения</h3>
-        <WordsList />
-        <div className="pages">
-          <button onClick={handleBackPage}>&#129044;</button> <span>{page}</span>{' '}
-          <button onClick={handleForwardPage}>&#129046;</button>
+        <h3 className='book-title'>Список слов для изучения</h3>
+        <WordsList words={words} loading={loading} button={null} />
+        <div className='pages'>
+          <button className='book-btn__left' onClick={handleBackPage}></button> <span>{page}</span>{' '}
+          <button className='book-btn__right' onClick={handleForwardPage}></button>
         </div>
       </div>
       <GamesNav />
